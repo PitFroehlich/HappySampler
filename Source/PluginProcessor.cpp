@@ -106,6 +106,7 @@ void HappySamplerAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need..
 	//gets the sample rate before anything starts
+	
 	synthesiser.setCurrentPlaybackSampleRate(sampleRate);
 }
 
@@ -143,27 +144,7 @@ bool HappySamplerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layou
 
 void HappySamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	juce::ScopedNoDenormals noDenormals;
-	auto totalNumInputChannels = getTotalNumInputChannels();
-	auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-	// In case we have more outputs than inputs, this code clears any output
-	// channels that didn't contain input data, (because these aren't
-	// guaranteed to be empty - they may contain garbage).
-	// This is here to avoid people getting screaming feedback
-	// when they first compile a plugin, but obviously you don't need to keep
-	// this code if your algorithm always overwrites all the output channels.
-	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-		buffer.clear(i, 0, buffer.getNumSamples());
-
-	// This is the place where you'd normally do the guts of your plugin's
-	// audio processing...
-	// Make sure to reset the state if your inner loop is processing
-	// the samples and the outer loop is handling the channels.
-	// Alternatively, you can process the samples with the channels
-	// interleaved by keeping the same state.
-	synthesiser.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-
+	synthesiser.renderNextBlock(loadedSample, midiMessages, 0, loadedSample.getNumSamples());
 }
 
 //==============================================================================
@@ -200,13 +181,19 @@ void HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+		auto sampleLengthOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+
+		loadedSample.setSize(1, sampleLengthOfLoadedSample);
+		audioFormatReader->read(&loadedSample, numberOfSkippedSamples, (sampleLengthOfLoadedSample - numberOfSkippedSamples), numberOfSkippedSamples, true, false);
+		auto buffer = loadedSample.getReadPointer(0);
 	}
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 	//Adds a new sound to our HappySampler
-	synthesiser.addSound(new juce::SamplerSound("Sample", *audioFormatReader, samplerSoundRange, 60, 0.1, 0.1, 10.0));
-}
+	synthesiser.addSound(new juce::SamplerSound("Sample", *audioFormatReader, samplerSoundRange, 60, 0.1, 0.1, 5.0));
+} 
 
 //==============================================================================
 // This creates new instances of the plugin..

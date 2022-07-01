@@ -30,6 +30,8 @@ public:
 
 	void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
+	
+
 	//==============================================================================
 	juce::AudioProcessorEditor* createEditor() override;
 	bool hasEditor() const override;
@@ -55,17 +57,23 @@ public:
 
 	void loadFile();
 
-private:
+	//Dieser Teil hier sollte die geladene Datei wiedergeben
+
+	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
+
+private: 
+	juce::AudioBuffer<float> loadedSample;
 
 	juce::Synthesiser synthesiser;
 	const int synthesiserVoices{ 3 };
+
+	const int numberOfSkippedSamples = 0;
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
 	juce::AudioFormatReader* audioFormatReader{ nullptr };
 
-	
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HappySamplerAudioProcessor)
 
