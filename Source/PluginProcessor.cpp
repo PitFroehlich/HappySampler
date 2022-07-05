@@ -197,6 +197,55 @@ void HappySamplerAudioProcessor::exportFile()
 
 }
 //loads a file and adds it as a sound to the sampler
+void HappySamplerAudioProcessor::loadFile2()
+{
+	//creates a dialog box to choose a file 
+	juce::FileChooser filechooser{ "Please load a file" };
+
+	if (filechooser.browseForFileToOpen())
+	{
+		auto choosenFile = filechooser.getResult();
+		audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile);
+		/*	loadedSample.setSize(1, numberOfLoadedSample);
+			auto buffer = loadedSample.getReadPointer(0);*/
+	}
+
+	auto numberOfLoadedSample = static_cast<int>(audioFormatReader2->lengthInSamples);
+	auto sampleRateFromSample = static_cast<int>(audioFormatReader2->sampleRate);
+	auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader2->bitsPerSample);
+
+	juce::BigInteger samplerSoundRange;
+	samplerSoundRange.setRange(0, 128, true);
+
+	juce::SamplerSound *samplerSound2 = new juce::SamplerSound(
+		"Sample",
+		*audioFormatReader2,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
+
+	synthesiser.addSound(samplerSound2);
+
+	//Setting right size for exportBuffer
+	exportbuffer.setSize(
+		audioFormatReader2->numChannels,
+		numberOfLoadedSample - 44100
+	);
+
+	//fill exportBuffer with audio 
+	audioFormatReader2->read(
+		&exportbuffer,
+		0,
+		numberOfLoadedSample - 44100,
+		441000,
+		true,
+		false
+	);
+
+}
+
 void HappySamplerAudioProcessor::loadFile() 
 {	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
@@ -216,14 +265,16 @@ void HappySamplerAudioProcessor::loadFile()
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	synthesiser.addSound(new juce::SamplerSound(
+	juce::SamplerSound* samplerSound = new juce::SamplerSound(
 		"Sample",
 		*audioFormatReader,
 		samplerSoundRange,
 		60,
 		0.1,
 		0.1,
-		5.0));
+		5.0);
+
+	synthesiser.addSound(samplerSound);
 
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(

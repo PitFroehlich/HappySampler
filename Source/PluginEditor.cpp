@@ -15,6 +15,9 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 {
 	loadButton.onClick = [&]() { audioProcessor.loadFile(); };
 	addAndMakeVisible(loadButton);
+	
+	loadButton2.onClick = [&]() { audioProcessor.loadFile(); };
+	addAndMakeVisible(loadButton2);
 
 	exportButton.onClick = [&]() { audioProcessor.exportFile(); };
 	addAndMakeVisible(exportButton);
@@ -41,6 +44,7 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 void HappySamplerAudioProcessorEditor::resized()
 {
 	loadButton.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
+	loadButton2.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 50, 100, 100);
 	exportButton.setBounds(getWidth() / 2 + 100 ,getHeight() / 2 - 50, 100, 100);
 	// This is generally where you'll want to lay out the positions of any
 	// subcomponents in your editor..

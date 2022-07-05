@@ -56,6 +56,7 @@ public:
 	void setStateInformation(const void* data, int sizeInBytes) override;
 	//==============================================================================
 	void loadFile();
+	void loadFile2();
 	void exportFile();
 
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
@@ -77,6 +78,7 @@ private:
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
 	juce::AudioFormatReader* audioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFormatReader2{ nullptr };
 	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
 
 	juce::AudioFormatWriter* audioFormatWriter{ nullptr };

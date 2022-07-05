@@ -26,6 +26,7 @@ public:
 
 private:
     juce::TextButton loadButton{ "Load" };
+    juce::TextButton loadButton2{ "Load2" };
     juce::TextButton exportButton{ "Export" };
 
     // This reference is provided as a quick way for your editor to
