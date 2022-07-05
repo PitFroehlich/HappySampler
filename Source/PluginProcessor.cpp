@@ -175,6 +175,25 @@ void HappySamplerAudioProcessor::setStateInformation(const void* data, int sizeI
 
 void HappySamplerAudioProcessor::exportFile()
 {
+	//exportbuffer.setSize(2, 10000);
+
+	// do something with buffer
+
+	juce::File file("C:/test.wav");
+	file.deleteFile();
+
+	juce::WavAudioFormat format;
+	std::unique_ptr<juce::AudioFormatWriter> writer;
+
+	writer.reset(format.createWriterFor(new juce::FileOutputStream(file),
+		44100,
+		exportbuffer.getNumChannels(),
+		16,
+		{},
+		0));
+
+	if (writer != nullptr)
+		writer->writeFromAudioSampleBuffer(exportbuffer, 0, exportbuffer.getNumSamples());
 
 }
 //loads a file and adds it as a sound to the sampler
@@ -186,26 +205,41 @@ void HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
-
-		auto numberOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-		auto sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
-		auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
-
 	/*	loadedSample.setSize(1, numberOfLoadedSample);
 		auto buffer = loadedSample.getReadPointer(0);*/
-		
-		juce::BigInteger samplerSoundRange;
-		samplerSoundRange.setRange(0, 128, true);
-
-		synthesiser.addSound(new juce::SamplerSound(
-			"Sample", 
-			*audioFormatReader, 
-			samplerSoundRange, 
-			60, 
-			0.1, 
-			0.1, 
-			5.0));
 	}
+
+	auto numberOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+	auto sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
+	auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
+
+	juce::BigInteger samplerSoundRange;
+	samplerSoundRange.setRange(0, 128, true);
+
+	synthesiser.addSound(new juce::SamplerSound(
+		"Sample",
+		*audioFormatReader,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0));
+
+	//Setting right size for exportBuffer
+	exportbuffer.setSize(
+		audioFormatReader->numChannels,
+		numberOfLoadedSample
+	);
+
+	//fill exportBuffer with audio 
+	audioFormatReader->read(
+		&exportbuffer,
+		0,
+		numberOfLoadedSample,
+		0,
+		true,
+		false
+	);
 	
 } 
 

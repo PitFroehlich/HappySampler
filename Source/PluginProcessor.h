@@ -66,6 +66,7 @@ private:
 
 	juce::AudioBuffer<float> loadedSample;
 	juce::AudioBuffer<float> editedSample;
+	juce::AudioBuffer<float> exportbuffer;
 
 	juce::Synthesiser synthesiser;
 	const int synthesiserVoices{ 3 };
