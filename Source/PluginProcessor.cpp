@@ -228,15 +228,15 @@ void HappySamplerAudioProcessor::loadFile()
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
 		audioFormatReader->numChannels,
-		numberOfLoadedSample
+		numberOfLoadedSample - 44100
 	);
 
 	//fill exportBuffer with audio 
 	audioFormatReader->read(
 		&exportbuffer,
 		0,
-		numberOfLoadedSample,
-		0,
+		numberOfLoadedSample - 44100,
+		441000,
 		true,
 		false
 	);
