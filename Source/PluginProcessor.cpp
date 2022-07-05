@@ -5,7 +5,8 @@
 
   ==============================================================================
 */
-
+#include <iostream>
+#include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
@@ -144,7 +145,7 @@ bool HappySamplerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layou
 
 void HappySamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	synthesiser.renderNextBlock(loadedSample, midiMessages, 0, loadedSample.getNumSamples());
+	synthesiser.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================
@@ -172,6 +173,10 @@ void HappySamplerAudioProcessor::setStateInformation(const void* data, int sizeI
 	// whose contents will have been created by the getStateInformation() call.
 }
 
+void HappySamplerAudioProcessor::exportFile()
+{
+
+}
 //loads a file and adds it as a sound to the sampler
 void HappySamplerAudioProcessor::loadFile() 
 {	//creates a dialog box to choose a file 
@@ -182,17 +187,26 @@ void HappySamplerAudioProcessor::loadFile()
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
 
-		auto sampleLengthOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+		auto numberOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+		auto sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
+		auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
 
-		loadedSample.setSize(1, sampleLengthOfLoadedSample);
-		audioFormatReader->read(&loadedSample, numberOfSkippedSamples, (sampleLengthOfLoadedSample - numberOfSkippedSamples), numberOfSkippedSamples, true, false);
-		auto buffer = loadedSample.getReadPointer(0);
+	/*	loadedSample.setSize(1, numberOfLoadedSample);
+		auto buffer = loadedSample.getReadPointer(0);*/
+		
+		juce::BigInteger samplerSoundRange;
+		samplerSoundRange.setRange(0, 128, true);
+
+		synthesiser.addSound(new juce::SamplerSound(
+			"Sample", 
+			*audioFormatReader, 
+			samplerSoundRange, 
+			60, 
+			0.1, 
+			0.1, 
+			5.0));
 	}
-
-	juce::BigInteger samplerSoundRange;
-	samplerSoundRange.setRange(0, 128, true);
-	//Adds a new sound to our HappySampler
-	synthesiser.addSound(new juce::SamplerSound("Sample", *audioFormatReader, samplerSoundRange, 60, 0.1, 0.1, 5.0));
+	
 } 
 
 //==============================================================================

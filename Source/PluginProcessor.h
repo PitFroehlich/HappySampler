@@ -54,25 +54,33 @@ public:
 	//==============================================================================
 	void getStateInformation(juce::MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
-
+	//==============================================================================
 	void loadFile();
+	void exportFile();
 
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
-
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
-
+	//==============================================================================
 private: 
+	juce::WavAudioFormat wavAudioFormat;
+
 	juce::AudioBuffer<float> loadedSample;
+	juce::AudioBuffer<float> editedSample;
 
 	juce::Synthesiser synthesiser;
 	const int synthesiserVoices{ 3 };
 
-	const int numberOfSkippedSamples = 0;
+	const int numberOfSkippedSamples = 200000;
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
 	juce::AudioFormatReader* audioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
+
+	juce::AudioFormatWriter* audioFormatWriter{ nullptr };
+
+	juce::MemoryOutputStream* memoryOutputStream{ nullptr };
 
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HappySamplerAudioProcessor)
