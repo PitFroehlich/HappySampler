@@ -69,8 +69,8 @@ private:
 	juce::AudioBuffer<float> editedSample;
 	juce::AudioBuffer<float> exportbuffer;
 
-	juce::Synthesiser synthesiser;
-	const int synthesiserVoices{ 3 };
+	MultiVoiceSynth synthesiser;
+	const int synthesiserVoices{ 9 };
 
 	const int numberOfSkippedSamples = 200000;
 

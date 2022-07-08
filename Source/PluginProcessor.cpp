@@ -10,6 +10,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
 //==============================================================================
 HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -196,16 +197,19 @@ void HappySamplerAudioProcessor::exportFile()
 		writer->writeFromAudioSampleBuffer(exportbuffer, 0, exportbuffer.getNumSamples());
 
 }
+
 //loads a file and adds it as a sound to the sampler
 void HappySamplerAudioProcessor::loadFile2()
 {
 	//creates a dialog box to choose a file 
-	juce::FileChooser filechooser{ "Please load a file" };
+	juce::FileChooser filechooser2{ "Please load a file" };
 
-	if (filechooser.browseForFileToOpen())
+	
+
+	if (filechooser2.browseForFileToOpen())
 	{
-		auto choosenFile = filechooser.getResult();
-		audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile);
+		auto choosenFile2 = filechooser2.getResult();
+		audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile2);
 		/*	loadedSample.setSize(1, numberOfLoadedSample);
 			auto buffer = loadedSample.getReadPointer(0);*/
 	}
@@ -218,7 +222,7 @@ void HappySamplerAudioProcessor::loadFile2()
 	samplerSoundRange.setRange(0, 128, true);
 
 	juce::SamplerSound *samplerSound2 = new juce::SamplerSound(
-		"Sample",
+		"Sample2",
 		*audioFormatReader2,
 		samplerSoundRange,
 		60,
