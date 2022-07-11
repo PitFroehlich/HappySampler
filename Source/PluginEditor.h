@@ -28,6 +28,7 @@ private:
     juce::TextButton loadButton{ "Load" };
     juce::TextButton loadButton2{ "Load2" };
     juce::TextButton exportButton{ "Export" };
+    juce::TextButton buttonApply{ "Apply" };
 
     juce::Slider sliderChangeSample{ "Sample Start" };
 
