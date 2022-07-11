@@ -58,6 +58,7 @@ public:
 	void loadFile();
 	void loadFile2();
 	void exportFile();
+	int getCurrentSampleLength();
 
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -73,6 +74,10 @@ private:
 	const int synthesiserVoices{ 9 };
 
 	const int numberOfSkippedSamples = 200000;
+
+	int sampleStart = 0;
+
+	int sampleAmountOfLoadedSample = 1;
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we

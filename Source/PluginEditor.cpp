@@ -24,11 +24,17 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	
 	buttonApply.onClick = [&]() {  };
 	addAndMakeVisible(buttonApply);
-	// Make sure that before the constructor has finished, you've set the
-	// editor's size to whatever you need it to be.
+
 	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+	int amountOfSamples = audioProcessor.getCurrentSampleLength();
+	DBG("this is the sample value ");
+	DBG(amountOfSamples);
+	sliderChangeSample.setRange(0, amountOfSamples, 1);
 	addAndMakeVisible(sliderChangeSample);
 	setSize(400, 300);
+
+	// Make sure that before the constructor has finished, you've set the
+	// editor's size to whatever you need it to be.
 }
 
 HappySamplerAudioProcessorEditor::~HappySamplerAudioProcessorEditor()

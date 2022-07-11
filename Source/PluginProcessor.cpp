@@ -235,14 +235,14 @@ void HappySamplerAudioProcessor::loadFile2()
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
 		audioFormatReader2->numChannels,
-		numberOfLoadedSample - 44100
+		numberOfLoadedSample - sampleStart
 	);
 
 	//fill exportBuffer with audio 
 	audioFormatReader2->read(
 		&exportbuffer,
 		0,
-		numberOfLoadedSample - 44100,
+		numberOfLoadedSample - sampleStart,
 		441000,
 		true,
 		false
@@ -262,9 +262,9 @@ void HappySamplerAudioProcessor::loadFile()
 		auto buffer = loadedSample.getReadPointer(0);*/
 	}
 
-	auto numberOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-	auto sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
-	auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
+	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+	int sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
+	int bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
@@ -283,20 +283,24 @@ void HappySamplerAudioProcessor::loadFile()
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
 		audioFormatReader->numChannels,
-		numberOfLoadedSample - 44100
+		sampleAmountOfLoadedSample - sampleStart
 	);
 
 	//fill exportBuffer with audio 
 	audioFormatReader->read(
 		&exportbuffer,
 		0,
-		numberOfLoadedSample - 44100,
+		sampleAmountOfLoadedSample - sampleStart,
 		441000,
 		true,
 		false
 	);
 	
 } 
+
+int HappySamplerAudioProcessor::getCurrentSampleLength() {
+	return sampleAmountOfLoadedSample;
+}
 
 //==============================================================================
 // This creates new instances of the plugin..
