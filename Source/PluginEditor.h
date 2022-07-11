@@ -29,6 +29,8 @@ private:
     juce::TextButton loadButton2{ "Load2" };
     juce::TextButton exportButton{ "Export" };
 
+    juce::Slider sliderChangeSample{ "Sample Start" };
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     HappySamplerAudioProcessor& audioProcessor;

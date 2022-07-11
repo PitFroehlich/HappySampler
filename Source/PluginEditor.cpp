@@ -23,6 +23,8 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(exportButton);
 	// Make sure that before the constructor has finished, you've set the
 	// editor's size to whatever you need it to be.
+	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+	addAndMakeVisible(sliderChangeSample);
 	setSize(400, 300);
 }
 
@@ -46,6 +48,7 @@ void HappySamplerAudioProcessorEditor::resized()
 	loadButton.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
 	loadButton2.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 50, 100, 100);
 	exportButton.setBounds(getWidth() / 2 + 100 ,getHeight() / 2 - 50, 100, 100);
+	sliderChangeSample.setBoundsRelative(0.5,0.7,0.2,0.2);
 	// This is generally where you'll want to lay out the positions of any
 	// subcomponents in your editor..
 }
