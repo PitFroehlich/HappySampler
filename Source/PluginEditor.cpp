@@ -26,10 +26,8 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(buttonApply);
 
 	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	int amountOfSamples = audioProcessor.getCurrentSampleLength();
-	DBG("this is the sample value ");
-	DBG(amountOfSamples);
-	sliderChangeSample.setRange(0, amountOfSamples, 1);
+	sliderChangeSample.setRange(0, 1, 0.001);
+	
 	addAndMakeVisible(sliderChangeSample);
 	setSize(400, 300);
 
@@ -61,4 +59,9 @@ void HappySamplerAudioProcessorEditor::resized()
 	sliderChangeSample.setBoundsRelative(0.5,0.7,0.4,0.2);
 	// This is generally where you'll want to lay out the positions of any
 	// subcomponents in your editor..
+}
+
+void HappySamplerAudioProcessorEditor::sliderValueChanged()
+{
+
 }
