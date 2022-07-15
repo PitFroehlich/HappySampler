@@ -59,23 +59,26 @@ public:
 	void loadFile2();
 	void exportFile();
 	int getCurrentSampleLength();
-
+	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
+	juce::AudioBuffer<float> exportbuffer;
+
+	int sampleStart = 0;
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;
 	juce::AudioBuffer<float> editedSample;
-	juce::AudioBuffer<float> exportbuffer;
+	
 
 	MultiVoiceSynth synthesiser;
 	const int synthesiserVoices{ 9 };
 
 	const int numberOfSkippedSamples = 200000;
 
-	int sampleStart = 0;
+	
 
 	int sampleAmountOfLoadedSample = 1;
 

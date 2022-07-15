@@ -61,7 +61,11 @@ void HappySamplerAudioProcessorEditor::resized()
 	// subcomponents in your editor..
 }
 
-void HappySamplerAudioProcessorEditor::sliderValueChanged()
-{
-
+void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) {
+	if (slider == &sliderChangeSample)
+	{
+		
+	}
 }
+
+
