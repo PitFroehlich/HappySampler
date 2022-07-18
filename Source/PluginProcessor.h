@@ -65,7 +65,7 @@ public:
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
 
-	int sampleStart{ 44100 };
+	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
 	//==============================================================================
 private: 

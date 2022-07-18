@@ -180,7 +180,7 @@ void HappySamplerAudioProcessor::exportFile()
 
 	// do something with buffer
 
-	juce::File file("C:Benutzer/pitfr/Desktop/test.wav");
+	juce::File file("C:/Users/pitfr/Desktop/test.wav");
 	file.deleteFile();
 
 	juce::WavAudioFormat format;
@@ -243,7 +243,7 @@ void HappySamplerAudioProcessor::loadFile2()
 		&exportbuffer,
 		0,
 		numberOfLoadedSample - sampleStart,
-		441000,
+		sampleStart,
 		true,
 		false
 	);
@@ -291,7 +291,7 @@ void HappySamplerAudioProcessor::loadFile()
 		&exportbuffer,
 		0,
 		sampleAmountOfLoadedSample - sampleStart,
-		44100,
+		sampleStart,
 		true,
 		false
 	);
@@ -299,6 +299,7 @@ void HappySamplerAudioProcessor::loadFile()
 } 
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
+	DBG(sampleAmountOfLoadedSample);
 	return sampleAmountOfLoadedSample;
 }
 //==============================================================================
