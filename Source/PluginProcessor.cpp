@@ -147,7 +147,6 @@ bool HappySamplerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layou
 void HappySamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
 	synthesiser.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-	getSampleStartValue();
 }
 
 //==============================================================================
@@ -181,7 +180,7 @@ void HappySamplerAudioProcessor::exportFile()
 
 	// do something with buffer
 
-	juce::File file("C:/test.wav");
+	juce::File file("C:Benutzer/pitfr/Desktop/test.wav");
 	file.deleteFile();
 
 	juce::WavAudioFormat format;
@@ -292,7 +291,7 @@ void HappySamplerAudioProcessor::loadFile()
 		&exportbuffer,
 		0,
 		sampleAmountOfLoadedSample - sampleStart,
-		441000,
+		44100,
 		true,
 		false
 	);

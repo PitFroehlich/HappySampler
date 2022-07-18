@@ -26,7 +26,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(buttonApply);
 
 	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	sliderChangeSample.setRange(0, 1, 0.001);
+	sliderChangeSample.setRange(0, 1000, 1);
 	sliderChangeSample.addListener(this);
 	
 	addAndMakeVisible(sliderChangeSample);
@@ -65,7 +65,7 @@ void HappySamplerAudioProcessorEditor::resized()
 void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) {
 	if (slider == &sliderChangeSample)
 	{
-		audioProcessor.sampleStart = sliderChangeSample.getValue();
+		audioProcessor.sampleStart = sliderChangeSample.getValue() * audioProcessor.sampleAmountOfLoadedSample;
 	}
 }
 

@@ -65,7 +65,8 @@ public:
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
 
-	float sampleStart{ 0.0 };
+	int sampleStart{ 44100 };
+	int sampleAmountOfLoadedSample = 1;
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
@@ -81,7 +82,6 @@ private:
 
 	
 
-	int sampleAmountOfLoadedSample = 1;
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
