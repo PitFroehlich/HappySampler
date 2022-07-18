@@ -59,12 +59,13 @@ public:
 	void loadFile2();
 	void exportFile();
 	int getCurrentSampleLength();
+	void getSampleStartValue();
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
 
-	int sampleStart = 0;
+	float sampleStart{ 0.0 };
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;

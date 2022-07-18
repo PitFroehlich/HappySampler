@@ -147,6 +147,7 @@ bool HappySamplerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layou
 void HappySamplerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
 	synthesiser.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+	getSampleStartValue();
 }
 
 //==============================================================================
@@ -300,6 +301,11 @@ void HappySamplerAudioProcessor::loadFile()
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
+}
+//==============================================================================
+
+void HappySamplerAudioProcessor::getSampleStartValue() {
+	DBG("current SampleStart is: " <<sampleStart );
 }
 
 //==============================================================================

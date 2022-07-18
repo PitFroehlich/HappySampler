@@ -27,6 +27,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 
 	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);
 	sliderChangeSample.setRange(0, 1, 0.001);
+	sliderChangeSample.addListener(this);
 	
 	addAndMakeVisible(sliderChangeSample);
 	setSize(400, 300);
@@ -64,7 +65,7 @@ void HappySamplerAudioProcessorEditor::resized()
 void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) {
 	if (slider == &sliderChangeSample)
 	{
-		
+		audioProcessor.sampleStart = sliderChangeSample.getValue();
 	}
 }
 
