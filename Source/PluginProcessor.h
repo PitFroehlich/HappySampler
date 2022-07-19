@@ -60,6 +60,7 @@ public:
 	void exportFile();
 	int getCurrentSampleLength();
 	void getSampleStartValue();
+	void exportAndReloadEditedSample();
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -76,7 +77,7 @@ private:
 	
 
 	MultiVoiceSynth synthesiser;
-	const int synthesiserVoices{ 9 };
+	const int synthesiserVoices{ 12 };
 
 	const int numberOfSkippedSamples = 200000;
 

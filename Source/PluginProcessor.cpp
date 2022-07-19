@@ -263,7 +263,7 @@ void HappySamplerAudioProcessor::loadFile()
 	}
 
 	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-	int sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
+	double sampleRateFromSample = static_cast<double>(audioFormatReader->sampleRate);
 	int bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
 
 	juce::BigInteger samplerSoundRange;
@@ -279,6 +279,9 @@ void HappySamplerAudioProcessor::loadFile()
 		5.0);
 
 	synthesiser.addSound(samplerSound);
+} 
+
+void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
@@ -295,8 +298,12 @@ void HappySamplerAudioProcessor::loadFile()
 		true,
 		false
 	);
-	
-} 
+
+	exportFile();
+	loadFile();
+
+		DBG(sampleStart);
+}
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	DBG(sampleAmountOfLoadedSample);
