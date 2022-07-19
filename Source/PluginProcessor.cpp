@@ -31,7 +31,7 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 	// Adds the maximal number of voices to our synthersiser
 	for (int i = 0; i < synthesiserVoices; i++)
 	{
-		synthesiser.addVoice(new juce::SamplerVoice);
+		synthesiser.addVoice(new gainChangeSamplerVoice);
 	}
 }
 // This is the destructor 
