@@ -9,6 +9,7 @@
 #include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "MultiVoiceSynth.h"
 
 
 //==============================================================================
