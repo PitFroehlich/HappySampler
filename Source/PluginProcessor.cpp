@@ -10,6 +10,8 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "MultiVoiceSynth.h"
+#include "HSamplerSound.h"
+#include "HSamplerVoice.h"
 
 
 //==============================================================================
@@ -32,7 +34,7 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 	// Adds the maximal number of voices to our synthersiser
 	for (int i = 0; i < synthesiserVoices; i++)
 	{
-		synthesiser.addVoice(new juce::SamplerVoice);
+		synthesiser.addVoice(new HSamplerVoice);
 	}
 }
 // This is the destructor 
@@ -222,7 +224,7 @@ void HappySamplerAudioProcessor::loadFile2()
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	juce::SamplerSound *samplerSound2 = new juce::SamplerSound(
+	HSamplerSound *samplerSound2 = new HSamplerSound(
 		"Sample2",
 		*audioFormatReader2,
 		samplerSoundRange,
