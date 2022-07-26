@@ -1,6 +1,7 @@
 #include "MultiVoiceSynth.h"
 
-void MultiVoiceSynth::noteOn(const int midiChannel,
+void MultiVoiceSynth::noteOn(
+    const int midiChannel,
     const int midiNoteNumber,
     const float velocity)
 {

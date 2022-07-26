@@ -6,6 +6,16 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="L7WEx6" name="HappySampler">
     <GROUP id="{F7ACC882-3733-FD82-4B2D-A45B5D873BF4}" name="Source">
+      <FILE id="TuaSsp" name="HSamplerVoice.cpp" compile="1" resource="0"
+            file="Source/HSamplerVoice.cpp"/>
+      <FILE id="jVYYOE" name="HSamplerSound.cpp" compile="1" resource="0"
+            file="Source/HSamplerSound.cpp"/>
+      <FILE id="QmoWOL" name="HSamplerSound.h" compile="0" resource="0" file="Source/HSamplerSound.h"/>
+      <FILE id="vj4D9W" name="HSamplerVoice.h" compile="0" resource="0" file="Source/HSamplerVoice.h"/>
+      <FILE id="Nk9sip" name="MultiVoiceSynth.cpp" compile="1" resource="0"
+            file="Source/MultiVoiceSynth.cpp"/>
+      <FILE id="nIWrUs" name="MultiVoiceSynth.h" compile="0" resource="0"
+            file="Source/MultiVoiceSynth.h"/>
       <FILE id="xziP34" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="nXMI3p" name="PluginProcessor.h" compile="0" resource="0"
