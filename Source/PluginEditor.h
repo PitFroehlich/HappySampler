@@ -30,7 +30,7 @@ public:
 	void sliderValueChanged(juce::Slider* slider) override;
 
 private:
-	juce::TextButton loadButton{ "Hello" };
+	juce::TextButton loadButton{ "Load1" };
 	juce::TextButton loadButton2{ "Load2" };
 	juce::TextButton exportButton{ "Export" };
 	juce::TextButton buttonApply{ "Apply" };

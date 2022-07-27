@@ -52,13 +52,13 @@ void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
     }
 }
 
-void HSamplerVoice::pitchWheelMoved(int /*newValue*/) {}
+//void HSamplerVoice::pitchWheelMoved(int /*newValue*/) {}
 
-void HSamplerVoice::controllerMoved(int /*controllerNumber*/, int /*newValue*/) {}
+//void HSamplerVoice::controllerMoved(int /*controllerNumber*/, int /*newValue*/) {}
 
 void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
-    if (auto* playingSound = static_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
+    if (auto* playingSound = dynamic_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
     {
         auto& data = *playingSound->getAudioData();
         const float* const inL = data.getReadPointer(0);
@@ -80,8 +80,8 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 
             auto envelopeValue = adsr.getNextSample();
 
-            l *= lgain * envelopeValue * 0.01;
-            r *= rgain * envelopeValue * 0.01;
+            l *= lgain * envelopeValue;
+            r *= rgain * envelopeValue;
 
             if (outR != nullptr)
             {
@@ -95,8 +95,9 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 
             sourceSamplePosition += pitchRatio;
 
-            if (sourceSamplePosition > playingSound->length)
+            if (adsr.getNextSample() == 0 || sourceSamplePosition > playingSound->length)
             {
+                clearCurrentNote();
                 stopNote(0.0f, false);
                 break;
             }

@@ -19,11 +19,11 @@ public:
 
 	void stopNote(float velocity, bool allowTailOff) override;
 
-	void pitchWheelMoved(int newValue) override;
+	//void pitchWheelMoved(int newValue) override;
 
-	void controllerMoved(int controllerNumber, int newValue) override;
+	//void controllerMoved(int controllerNumber, int newValue) override;
 	void renderNextBlock(juce::AudioBuffer<float>&, int startSample, int numSamples) override;
-	using SynthesiserVoice::renderNextBlock;
+	//using SynthesiserVoice::renderNextBlock;
 
 //==============================================================================
 private:

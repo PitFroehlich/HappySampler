@@ -305,18 +305,15 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 	exportFile();
 	loadFile();
 
-		DBG(sampleStart);
 }
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
-	DBG(sampleAmountOfLoadedSample);
 	return sampleAmountOfLoadedSample;
 }
 //==============================================================================
 
-void HappySamplerAudioProcessor::getSampleStartValue() {
-	DBG("current SampleStart is: " <<sampleStart );
-}
+//void HappySamplerAudioProcessor::getSampleStartValue() {
+//}
 
 //==============================================================================
 // This creates new instances of the plugin..
