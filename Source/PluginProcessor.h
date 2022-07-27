@@ -81,7 +81,7 @@ private:
 	
 
 	MultiVoiceSynth synthesiser;
-	const int synthesiserVoices{ 12 };
+	const int synthesiserVoices{ 24 };
 
 	const int numberOfSkippedSamples = 200000;
 

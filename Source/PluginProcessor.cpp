@@ -272,7 +272,7 @@ void HappySamplerAudioProcessor::loadFile()
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	juce::SamplerSound* samplerSound = new juce::SamplerSound(
+	HSamplerSound* samplerSound = new HSamplerSound(
 		"Sample",
 		*audioFormatReader,
 		samplerSoundRange,

@@ -12,6 +12,50 @@
 #include "HSamplerSound.h"
 #include "MultiVoiceSynth.h"
 
+bool HSamplerVoice::canPlaySound(juce::SynthesiserSound* sound)
+{
+    return dynamic_cast<const HSamplerSound*> (sound) != nullptr;
+}
+
+void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int /*currentPitchWheelPosition*/)
+{   
+    if (auto* sound = dynamic_cast<const HSamplerSound*> (s))
+    {
+        pitchRatio = std::pow(2.0, (midiNoteNumber - sound->midiRootNote) / 12.0)
+            * sound->sourceSampleRate / getSampleRate();
+
+        sourceSamplePosition = 0.0;
+        lgain = velocity;
+        rgain = velocity;
+
+        adsr.setSampleRate(sound->sourceSampleRate);
+        adsr.setParameters(sound->params);
+
+        adsr.noteOn();
+    }
+    else
+    {
+        jassertfalse; // this object can only play HSamplerSounds!
+    }
+}
+
+void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
+{
+    if (allowTailOff)
+    {
+        adsr.noteOff();
+    }
+    else
+    {
+        clearCurrentNote();
+        adsr.reset();
+    }
+}
+
+void HSamplerVoice::pitchWheelMoved(int /*newValue*/) {}
+
+void HSamplerVoice::controllerMoved(int /*controllerNumber*/, int /*newValue*/) {}
+
 void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
     if (auto* playingSound = static_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
@@ -36,8 +80,8 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 
             auto envelopeValue = adsr.getNextSample();
 
-            l *= lgain * envelopeValue;
-            r *= rgain * envelopeValue;
+            l *= lgain * envelopeValue * 0.01;
+            r *= rgain * envelopeValue * 0.01;
 
             if (outR != nullptr)
             {
