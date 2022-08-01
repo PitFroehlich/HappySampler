@@ -65,6 +65,7 @@ public:
 	int getCurrentSampleLength();
 	void getSampleStartValue();
 	void exportAndReloadEditedSample();
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -72,6 +73,7 @@ public:
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
+
 
 	
 	//==============================================================================

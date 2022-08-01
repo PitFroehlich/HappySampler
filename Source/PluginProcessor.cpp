@@ -318,6 +318,14 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
 }
+//
+//double HappySamplerAudioProcessor::getGainControl1() {
+//	return gainControl1;
+//}
+//
+//double HappySamplerAudioProcessor::getGainControl2() {
+//	return gainControl2;
+//}
 //==============================================================================
 
 //void HappySamplerAudioProcessor::getSampleStartValue() {

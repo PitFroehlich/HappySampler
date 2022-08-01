@@ -14,7 +14,7 @@
 //==============================================================================
 HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor& p)
 	: AudioProcessorEditor(&p), audioProcessor(p)
-	: AudioProcessorEditor(&p), hSamplerVoice(p)
+	
 
 {
 	loadButton.onClick = [&]() { audioProcessor.loadFile(); };
@@ -85,19 +85,11 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 			* audioProcessor.sampleAmountOfLoadedSample;
 	}
 }
-	
-void HappySamplerAudioProcessorEditor::sliderGainControl1Changed(juce::Slider* slider) {
-	if (slider == &sliderChangeSample)
-	{
-		hSamplerVoice.gainControl1 = sliderGainControl1.getValue();
-	}
-}
 
-	void HappySamplerAudioProcessorEditor::sliderGainControl2Changed(juce::Slider* slider) {
-	if (slider == &sliderChangeSample)
-	{
-		hSamplerVoice2.gainControl2 = sliderGainControl2.getValue();
-	}
-}
+
+	
+
+
+
 
 

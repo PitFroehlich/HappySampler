@@ -12,6 +12,12 @@
 #include "HSamplerSound.h"
 #include "MultiVoiceSynth.h"
 #include "PluginEditor.h"
+#include "PluginProcessor.h"
+
+void HSamplerVoice::setGainControlValue(double gainControlValue) {
+    gainControl = gainControlValue;
+}
+
 
 bool HSamplerVoice::canPlaySound(juce::SynthesiserSound* sound)
 {
@@ -81,8 +87,8 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 
             auto envelopeValue = adsr.getNextSample();
 
-            l *= lgain * envelopeValue * gainControl1;
-            r *= rgain * envelopeValue * gainControl1;
+            l *= lgain * envelopeValue * 1;  
+            r *= rgain * envelopeValue * 1;
 
             if (outR != nullptr)
             {
