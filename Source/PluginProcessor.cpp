@@ -9,6 +9,12 @@
 #include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "MultiVoiceSynth.h"
+#include "HSamplerSound.h"
+#include "HSamplerSound2.h"
+#include "HSamplerVoice.h"
+#include "HSamplerVoice2.h"
+
 
 //==============================================================================
 HappySamplerAudioProcessor::HappySamplerAudioProcessor()
@@ -27,10 +33,16 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 {
 	//This makes basic audio formats available
 	audioFormatManager.registerBasicFormats();
-	// Adds the maximal number of voices to our synthersiser
-	for (int i = 0; i < synthesiserVoices; i++)
+	// Adds SamplerVoices to the first half
+	for (int i = 0; i < synthesiserVoices / 2; i++)
 	{
-		synthesiser.addVoice(new juce::SamplerVoice);
+		synthesiser.addVoice(new HSamplerVoice);
+	}
+
+	// Adds SamplerVoices2 to the second half
+	for (int i = synthesiserVoices / 2; i < synthesiserVoices; i++)
+	{
+		synthesiser.addVoice(new HSamplerVoice2);
 	}
 }
 // This is the destructor 
@@ -179,7 +191,7 @@ void HappySamplerAudioProcessor::exportFile()
 
 	// do something with buffer
 
-	juce::File file("C:/test.wav");
+	juce::File file("C:/Users/pitfr/Desktop/test.wav");
 	file.deleteFile();
 
 	juce::WavAudioFormat format;
@@ -196,7 +208,59 @@ void HappySamplerAudioProcessor::exportFile()
 		writer->writeFromAudioSampleBuffer(exportbuffer, 0, exportbuffer.getNumSamples());
 
 }
+
 //loads a file and adds it as a sound to the sampler
+void HappySamplerAudioProcessor::loadFile2()
+{
+	//creates a dialog box to choose a file 
+	juce::FileChooser filechooser2{ "Please load a file" };
+
+	
+
+	if (filechooser2.browseForFileToOpen())
+	{
+		auto choosenFile2 = filechooser2.getResult();
+		audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile2);
+		/*	loadedSample.setSize(1, numberOfLoadedSample);
+			auto buffer = loadedSample.getReadPointer(0);*/
+	}
+
+	auto numberOfLoadedSample = static_cast<int>(audioFormatReader2->lengthInSamples);
+	auto sampleRateFromSample = static_cast<int>(audioFormatReader2->sampleRate);
+	auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader2->bitsPerSample);
+
+	juce::BigInteger samplerSoundRange;
+	samplerSoundRange.setRange(0, 128, true);
+
+	HSamplerSound2 *samplerSound2 = new HSamplerSound2(
+		"Sample2",
+		*audioFormatReader2,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
+
+	synthesiser.addSound(samplerSound2);
+
+	//Setting right size for exportBuffer
+	exportbuffer.setSize(
+		audioFormatReader2->numChannels,
+		numberOfLoadedSample - sampleStart
+	);
+
+	//fill exportBuffer with audio 
+	audioFormatReader2->read(
+		&exportbuffer,
+		0,
+		numberOfLoadedSample - sampleStart,
+		sampleStart,
+		true,
+		false
+	);
+
+}
+
 void HappySamplerAudioProcessor::loadFile() 
 {	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
@@ -209,39 +273,55 @@ void HappySamplerAudioProcessor::loadFile()
 		auto buffer = loadedSample.getReadPointer(0);*/
 	}
 
-	auto numberOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-	auto sampleRateFromSample = static_cast<int>(audioFormatReader->sampleRate);
-	auto bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
+	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+	double sampleRateFromSample = static_cast<double>(audioFormatReader->sampleRate);
+	int bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	synthesiser.addSound(new juce::SamplerSound(
+	HSamplerSound* samplerSound = new HSamplerSound(
 		"Sample",
 		*audioFormatReader,
 		samplerSoundRange,
 		60,
 		0.1,
 		0.1,
-		5.0));
+		5.0);
+
+	synthesiser.addSound(samplerSound);
+} 
+
+void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
 		audioFormatReader->numChannels,
-		numberOfLoadedSample
+		sampleAmountOfLoadedSample - sampleStart
 	);
 
 	//fill exportBuffer with audio 
 	audioFormatReader->read(
 		&exportbuffer,
 		0,
-		numberOfLoadedSample,
-		0,
+		sampleAmountOfLoadedSample - sampleStart,
+		sampleStart,
 		true,
 		false
 	);
-	
-} 
+
+	exportFile();
+	loadFile();
+
+}
+
+int HappySamplerAudioProcessor::getCurrentSampleLength() {
+	return sampleAmountOfLoadedSample;
+}
+//==============================================================================
+
+//void HappySamplerAudioProcessor::getSampleStartValue() {
+//}
 
 //==============================================================================
 // This creates new instances of the plugin..

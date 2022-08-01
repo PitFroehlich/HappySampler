@@ -9,6 +9,10 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "MultiVoiceSynth.h"
+
+
+
 
 //==============================================================================
 /**
@@ -56,27 +60,39 @@ public:
 	void setStateInformation(const void* data, int sizeInBytes) override;
 	//==============================================================================
 	void loadFile();
+	void loadFile2();
 	void exportFile();
-
+	int getCurrentSampleLength();
+	void getSampleStartValue();
+	void exportAndReloadEditedSample();
+	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
+	juce::AudioBuffer<float> exportbuffer;
+
+	int sampleStart{ 0 };
+	int sampleAmountOfLoadedSample = 1;
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;
 	juce::AudioBuffer<float> editedSample;
-	juce::AudioBuffer<float> exportbuffer;
+	
 
-	juce::Synthesiser synthesiser;
-	const int synthesiserVoices{ 3 };
+	MultiVoiceSynth synthesiser;
+	const int synthesiserVoices{ 24 };
 
 	const int numberOfSkippedSamples = 200000;
+
+	
+
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
 	juce::AudioFormatReader* audioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFormatReader2{ nullptr };
 	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
 
 	juce::AudioFormatWriter* audioFormatWriter{ nullptr };
