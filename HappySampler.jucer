@@ -7,12 +7,24 @@
   <MAINGROUP id="L7WEx6" name="HappySampler">
     <GROUP id="{F7ACC882-3733-FD82-4B2D-A45B5D873BF4}" name="Source">
       <GROUP id="{A7574F2D-A849-D43C-C0A3-AF4114CAA220}" name="CustomAudio">
-        <FILE id="LAwete" name="HSamplerSound.cpp" compile="1" resource="0"
-              file="Source/HSamplerSound.cpp"/>
-        <FILE id="j2UokL" name="HSamplerSound.h" compile="0" resource="0" file="Source/HSamplerSound.h"/>
-        <FILE id="IKlbzK" name="HSamplerVoice.cpp" compile="1" resource="0"
-              file="Source/HSamplerVoice.cpp"/>
-        <FILE id="AeLgrW" name="HSamplerVoice.h" compile="0" resource="0" file="Source/HSamplerVoice.h"/>
+        <GROUP id="{3F9A023C-B7A6-F517-9D1B-01BBC713B99D}" name="HSampler2">
+          <FILE id="QBpTdr" name="HSamplerSound2.cpp" compile="1" resource="0"
+                file="Source/HSamplerSound2.cpp"/>
+          <FILE id="kCWjHR" name="HSamplerSound2.h" compile="0" resource="0"
+                file="Source/HSamplerSound2.h"/>
+          <FILE id="wAkC5R" name="HSamplerVoice2.cpp" compile="1" resource="0"
+                file="Source/HSamplerVoice2.cpp"/>
+          <FILE id="gxf7JL" name="HSamplerVoice2.h" compile="0" resource="0"
+                file="Source/HSamplerVoice2.h"/>
+        </GROUP>
+        <GROUP id="{3B0061B8-82BB-B62B-A531-E81B086A41C5}" name="HSampler1">
+          <FILE id="LAwete" name="HSamplerSound.cpp" compile="1" resource="0"
+                file="Source/HSamplerSound.cpp"/>
+          <FILE id="j2UokL" name="HSamplerSound.h" compile="0" resource="0" file="Source/HSamplerSound.h"/>
+          <FILE id="IKlbzK" name="HSamplerVoice.cpp" compile="1" resource="0"
+                file="Source/HSamplerVoice.cpp"/>
+          <FILE id="AeLgrW" name="HSamplerVoice.h" compile="0" resource="0" file="Source/HSamplerVoice.h"/>
+        </GROUP>
         <FILE id="Nk9sip" name="MultiVoiceSynth.cpp" compile="1" resource="0"
               file="Source/MultiVoiceSynth.cpp"/>
         <FILE id="nIWrUs" name="MultiVoiceSynth.h" compile="0" resource="0"

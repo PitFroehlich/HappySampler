@@ -1,24 +1,24 @@
 /*
   ==============================================================================
 
-    HSamplerVoice.cpp
-    Created: 26 Jul 2022 1:38:31pm
+    HSamplerVoice2.cpp
+    Created: 1 Aug 2022 10:50:05am
     Author:  pitfr
 
   ==============================================================================
 */
 
-#include "HSamplerVoice.h"
+#include "HSamplerVoice2.h"
 #include "HSamplerSound.h"
 #include "MultiVoiceSynth.h"
 
-bool HSamplerVoice::canPlaySound(juce::SynthesiserSound* sound)
+bool HSamplerVoice2::canPlaySound(juce::SynthesiserSound* sound)
 {
     return dynamic_cast<const HSamplerSound*> (sound) != nullptr;
 }
 
-void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int /*currentPitchWheelPosition*/)
-{   
+void HSamplerVoice2::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int /*currentPitchWheelPosition*/)
+{
     if (auto* sound = dynamic_cast<const HSamplerSound*> (s))
     {
         pitchRatio = std::pow(2.0, (midiNoteNumber - sound->midiRootNote) / 12.0)
@@ -39,7 +39,7 @@ void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesi
     }
 }
 
-void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
+void HSamplerVoice2::stopNote(float /*velocity*/, bool allowTailOff)
 {
     if (allowTailOff)
     {
@@ -56,7 +56,7 @@ void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
 
 //void HSamplerVoice::controllerMoved(int /*controllerNumber*/, int /*newValue*/) {}
 
-void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
+void HSamplerVoice2::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
     if (auto* playingSound = dynamic_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
     {
