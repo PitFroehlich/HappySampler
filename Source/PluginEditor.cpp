@@ -16,7 +16,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	loadButton.onClick = [&]() { audioProcessor.loadFile(); };
 	addAndMakeVisible(loadButton);
 	
-	loadButton2.onClick = [&]() { audioProcessor.loadFile(); };
+	loadButton2.onClick = [&]() { audioProcessor.loadFile2(); };
 	addAndMakeVisible(loadButton2);
 
 	exportButton.onClick = [&]() { audioProcessor.exportFile(); };

@@ -9,17 +9,17 @@
 */
 
 #include "HSamplerVoice2.h"
-#include "HSamplerSound.h"
+#include "HSamplerSound2.h"
 #include "MultiVoiceSynth.h"
 
 bool HSamplerVoice2::canPlaySound(juce::SynthesiserSound* sound)
 {
-    return dynamic_cast<const HSamplerSound*> (sound) != nullptr;
+    return dynamic_cast<const HSamplerSound2*> (sound) != nullptr;
 }
 
 void HSamplerVoice2::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int /*currentPitchWheelPosition*/)
 {
-    if (auto* sound = dynamic_cast<const HSamplerSound*> (s))
+    if (auto* sound = dynamic_cast<const HSamplerSound2*> (s))
     {
         pitchRatio = std::pow(2.0, (midiNoteNumber - sound->midiRootNote) / 12.0)
             * sound->sourceSampleRate / getSampleRate();
@@ -58,7 +58,7 @@ void HSamplerVoice2::stopNote(float /*velocity*/, bool allowTailOff)
 
 void HSamplerVoice2::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
-    if (auto* playingSound = dynamic_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
+    if (auto* playingSound = dynamic_cast<HSamplerSound2*> (getCurrentlyPlayingSound().get()))
     {
         auto& data = *playingSound->getAudioData();
         const float* const inL = data.getReadPointer(0);
@@ -80,8 +80,8 @@ void HSamplerVoice2::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int
 
             auto envelopeValue = adsr.getNextSample();
 
-            l *= lgain * envelopeValue * 0.5;
-            r *= rgain * envelopeValue * 0.5;
+            l *= lgain * envelopeValue * 0.001;
+            r *= rgain * envelopeValue * 0.001;
 
             if (outR != nullptr)
             {
