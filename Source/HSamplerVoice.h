@@ -25,6 +25,8 @@ public:
 	void renderNextBlock(juce::AudioBuffer<float>&, int startSample, int numSamples) override;
 	//using SynthesiserVoice::renderNextBlock;
 
+	double gainControl1{ 1 };
+	
 //==============================================================================
 private:
 	//Variables from samplerVoice base class

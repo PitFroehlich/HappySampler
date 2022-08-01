@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "HSamplerVoice.h"
+#include "HSamplerVoice2.h"
 
 
 //==============================================================================
@@ -28,6 +30,8 @@ public:
 	void resized() override;
 
 	void sliderValueChanged(juce::Slider* slider) override;
+	void sliderGainControl1Changed(juce::Slider* slider);
+	void sliderGainControl2Changed(juce::Slider* slider);
 
 private:
 	juce::TextButton loadButton{ "Load1" };
@@ -36,6 +40,8 @@ private:
 	juce::TextButton buttonApply{ "Apply" };
 
 	juce::Slider sliderChangeSample{ "Sample Start" };
+	juce::Slider sliderGainControl1{ "Gain Control" };
+	juce::Slider sliderGainControl2{ "Gain Control" };
 
 	double sliderChangeSampleValue;
 
@@ -44,6 +50,8 @@ private:
 	// This reference is provided as a quick way for your editor to
 	// access the processor object that created it.
 	HappySamplerAudioProcessor& audioProcessor;
+	HSamplerVoice& hSamplerVoice;
+	HSamplerVoice2& hSamplerVoice2;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HappySamplerAudioProcessorEditor)
 };

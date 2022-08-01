@@ -72,6 +72,8 @@ public:
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
+
+	
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
