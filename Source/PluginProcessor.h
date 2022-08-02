@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "MultiVoiceSynth.h"
+#include "GainControl.h"
 
 
 
@@ -65,6 +66,11 @@ public:
 	int getCurrentSampleLength();
 	void getSampleStartValue();
 	void exportAndReloadEditedSample();
+
+	void debugger();
+
+	void updateGainControl();
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -72,6 +78,9 @@ public:
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
+
+	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
+	
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
@@ -85,7 +94,7 @@ private:
 
 	const int numberOfSkippedSamples = 200000;
 
-	
+	GainControl::Parameters gainControlParams;
 
 
 	juce::AudioFormatManager audioFormatManager;

@@ -121,6 +121,10 @@ void HappySamplerAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 	//gets the sample rate before anything starts
 	
 	synthesiser.setCurrentPlaybackSampleRate(sampleRate);
+
+	//updateGainControl();
+	
+
 }
 
 void HappySamplerAudioProcessor::releaseResources()
@@ -315,9 +319,44 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
 }
 
+void HappySamplerAudioProcessor::debugger()
+{
+	DBG("This is the number of sounds");
+	DBG(synthesiser.getNumSounds(););
+}
+
+void HappySamplerAudioProcessor::updateGainControl()
+{
+	for (int i = 0; i < synthesiser.getNumSounds(); i++)
+	{
+		// gets sounds an makes sure it is a SamplerSound (so setGainControlParameters works)
+		// prevents program from crashing in case of exceptions
+		if (auto sound = dynamic_cast<HSamplerSound*>(synthesiser.getSound(i).get()))
+		{
+			DBG("This is the updateGainControl");
+			DBG(gainControlParams.gainValue1);
+			sound->setGainControlParameters(gainControlParams);
+		}
+
+		if (auto voice = dynamic_cast<HSamplerVoice*>(synthesiser.getVoice(i)))
+		{
+			voice->setGainControlParameters(gainControlParams);
+		}
+
+	}
+}
+
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
 }
+//
+//double HappySamplerAudioProcessor::getGainControl1() {
+//	return gainControl1;
+//}
+//
+//double HappySamplerAudioProcessor::getGainControl2() {
+//	return gainControl2;
+//}
 //==============================================================================
 
 //void HappySamplerAudioProcessor::getSampleStartValue() {

@@ -10,6 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "HSamplerVoice.h"
+#include "HSamplerVoice2.h"
+#include "GainControl.h"
 
 
 //==============================================================================
@@ -36,9 +39,12 @@ private:
 	juce::TextButton buttonApply{ "Apply" };
 
 	juce::Slider sliderChangeSample{ "Sample Start" };
+	juce::Slider sliderGainControl1{ "Gain Control" };
+	juce::Slider sliderGainControl2{ "Gain Control" };
 
 	double sliderChangeSampleValue;
 
+	GainControl gainControl;
 
 
 	// This reference is provided as a quick way for your editor to
