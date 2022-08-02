@@ -10,6 +10,8 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "GainControl.h"
+
 
 class HSamplerVoice : public juce::SamplerVoice {
 public:
@@ -26,8 +28,8 @@ public:
 	//void controllerMoved(int controllerNumber, int newValue) override;
 	void renderNextBlock(juce::AudioBuffer<float>&, int startSample, int numSamples) override;
 	//using SynthesiserVoice::renderNextBlock;
-	void setGainControlValue(double gainControlValue);
-	
+	//void setGainControlValue(double gainControlValue);
+	void setGainControlParameters(GainControl::Parameters parametersToUse) { gainParams = parametersToUse; }
 	
 //==============================================================================
 private:
@@ -38,9 +40,14 @@ private:
 	double filterCutoff;
 	double levelSlider;
 	int length = 0, midiRootNote = 0;
-	double gainControl = 1;
+	//double gainControl = 1;
 
 	juce::ADSR adsr;
+
+	GainControl gainControl;
+
+	GainControl::Parameters gainParams;
+
 
 	JUCE_LEAK_DETECTOR(HSamplerVoice)
 

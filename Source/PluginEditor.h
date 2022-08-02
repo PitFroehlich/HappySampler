@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
+#include "GainControl.h"
 
 
 //==============================================================================
@@ -43,6 +44,7 @@ private:
 
 	double sliderChangeSampleValue;
 
+	GainControl gainControl;
 
 
 	// This reference is provided as a quick way for your editor to

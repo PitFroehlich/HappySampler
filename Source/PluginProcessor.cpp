@@ -122,7 +122,7 @@ void HappySamplerAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 	
 	synthesiser.setCurrentPlaybackSampleRate(sampleRate);
 
-	updateGainControl();
+	//updateGainControl();
 	
 
 }
@@ -333,7 +333,14 @@ void HappySamplerAudioProcessor::updateGainControl()
 		// prevents program from crashing in case of exceptions
 		if (auto sound = dynamic_cast<HSamplerSound*>(synthesiser.getSound(i).get()))
 		{
+			DBG("This is the updateGainControl");
+			DBG(gainControlParams.gainValue1);
 			sound->setGainControlParameters(gainControlParams);
+		}
+
+		if (auto voice = dynamic_cast<HSamplerVoice*>(synthesiser.getVoice(i)))
+		{
+			voice->setGainControlParameters(gainControlParams);
 		}
 
 	}

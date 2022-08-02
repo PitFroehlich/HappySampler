@@ -32,8 +32,4 @@ private:
 
     juce::ADSR::Parameters params;
     GainControl::Parameters gainParams;
-
-    juce::ADSR adsr;
-    GainControl gaincontrol;
-
 };

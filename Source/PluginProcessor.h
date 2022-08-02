@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "MultiVoiceSynth.h"
+#include "GainControl.h"
 
 
 
@@ -78,7 +79,7 @@ public:
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
 
-
+	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
 	
 	//==============================================================================
 private: 
