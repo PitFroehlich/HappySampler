@@ -26,7 +26,9 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	exportButton.onClick = [&]() { audioProcessor.exportFile(); };
 	addAndMakeVisible(exportButton);
 	
-	buttonApply.onClick = [&]() { audioProcessor.exportAndReloadEditedSample(); };
+	buttonApply.onClick = [&]() { /*audioProcessor.exportAndReloadEditedSample();*/
+		audioProcessor.debugger();
+		 };
 	addAndMakeVisible(buttonApply);
 
 	sliderChangeSample.setSliderStyle(juce::Slider::RotaryVerticalDrag);

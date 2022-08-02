@@ -66,6 +66,10 @@ public:
 	void getSampleStartValue();
 	void exportAndReloadEditedSample();
 
+	void debugger();
+
+	void updateGainControl();
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -89,7 +93,7 @@ private:
 
 	const int numberOfSkippedSamples = 200000;
 
-	
+	GainControl::Parameters gainControlParams;
 
 
 	juce::AudioFormatManager audioFormatManager;

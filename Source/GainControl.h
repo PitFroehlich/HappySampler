@@ -10,11 +10,11 @@
 
 #pragma once
 
-class JUCE_API GainControl {
+class GainControl {
 public:
     GainControl() {}
 
-    struct JUCE_API  Parameters
+    struct Parameters
     {
         Parameters() = default;
 
