@@ -27,8 +27,7 @@ public:
 
 	//void controllerMoved(int controllerNumber, int newValue) override;
 	void renderNextBlock(juce::AudioBuffer<float>&, int startSample, int numSamples) override;
-	//using SynthesiserVoice::renderNextBlock;
-	//void setGainControlValue(double gainControlValue);
+	
 	void setGainControlParameters(GainControl::Parameters parametersToUse) { gainParams = parametersToUse; }
 	
 //==============================================================================
@@ -40,7 +39,6 @@ private:
 	double filterCutoff;
 	double levelSlider;
 	int length = 0, midiRootNote = 0;
-	//double gainControl = 1;
 
 	juce::ADSR adsr;
 
