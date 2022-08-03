@@ -27,7 +27,6 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(exportButton);
 	
 	buttonApply.onClick = [&]() { /*audioProcessor.exportAndReloadEditedSample();*/
-		audioProcessor.debugger();
 		 };
 	addAndMakeVisible(buttonApply);
 

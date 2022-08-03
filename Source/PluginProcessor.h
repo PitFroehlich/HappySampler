@@ -67,8 +67,6 @@ public:
 	void getSampleStartValue();
 	void exportAndReloadEditedSample();
 
-	void debugger();
-
 	void updateGainControl();
 
 	//==============================================================================

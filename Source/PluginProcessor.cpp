@@ -318,11 +318,6 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
 }
 
-void HappySamplerAudioProcessor::debugger()
-{
-	DBG("This is the number of sounds");
-	DBG(synthesiser.getNumSounds(););
-}
 
 void HappySamplerAudioProcessor::updateGainControl()
 {
@@ -333,9 +328,6 @@ void HappySamplerAudioProcessor::updateGainControl()
 		{
 			voice->setGainControlParameters(gainControlParams);
 		}
-
-		double debug = gainControlParams.gainValue2;
-		
 
 		if (auto voice2 = dynamic_cast<HSamplerVoice2*>(synthesiser.getVoice(20)))
 		{

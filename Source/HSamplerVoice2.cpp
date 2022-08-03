@@ -83,11 +83,7 @@ void HSamplerVoice2::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int
 
 			auto envelopeValue = adsr.getNextSample();
 
-			DBG("aus SamplerVoice2");
-			DBG(gainParams.gainValue2);
-			DBG(gainParams.gainValue1);
-
-			auto gain = gainParams.gainValue2;
+			auto gain = gainParams.gainValue1;
 
 			l *= lgain * envelopeValue * gain;
 			r *= rgain * envelopeValue * gain;

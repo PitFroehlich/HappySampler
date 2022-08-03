@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "GainControl.h"
 
+
 class HSamplerVoice2 : public juce::SamplerVoice {
 public:
 	bool canPlaySound(juce::SynthesiserSound*) override;
