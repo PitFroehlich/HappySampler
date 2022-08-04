@@ -27,7 +27,6 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(exportButton);
 	
 	buttonApply.onClick = [&]() { /*audioProcessor.exportAndReloadEditedSample();*/
-		audioProcessor.debugger();
 		 };
 	addAndMakeVisible(buttonApply);
 
@@ -86,15 +85,15 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 		audioProcessor.sampleStart = sliderChangeSample.getValue()
 			* audioProcessor.sampleAmountOfLoadedSample;
 	}
-	else if (slider == &sliderGainControl1)
+	if (slider == &sliderGainControl1)
 	{
-		DBG("This is the value of the slider itself");
-		DBG(sliderGainControl1.getValue(););
 		audioProcessor.getGainControlParameters().gainValue1 = sliderGainControl1.getValue();
 	}
+	if (slider == &sliderGainControl2)
+	{	
+		audioProcessor.getGainControlParameters().gainValue2 = sliderGainControl2.getValue();
+	}
 	audioProcessor.updateGainControl();
-	DBG("This is the gain control in the knob");
-	DBG(audioProcessor.getGainControlParameters().gainValue1);
 }
 
 
