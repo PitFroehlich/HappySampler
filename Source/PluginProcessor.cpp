@@ -29,7 +29,7 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 	)
 #endif
 
-//This is the constructor 
+	//This is the constructor 
 {
 	//This makes basic audio formats available
 	audioFormatManager.registerBasicFormats();
@@ -119,10 +119,10 @@ void HappySamplerAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need..
 	//gets the sample rate before anything starts
-	
+
 	synthesiser.setCurrentPlaybackSampleRate(sampleRate);
 
-	
+
 
 }
 
@@ -218,7 +218,7 @@ void HappySamplerAudioProcessor::loadFile2()
 	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser2{ "Please load a file" };
 
-	
+
 
 	if (filechooser2.browseForFileToOpen())
 	{
@@ -235,7 +235,7 @@ void HappySamplerAudioProcessor::loadFile2()
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	HSamplerSound2 *samplerSound2 = new HSamplerSound2(
+	HSamplerSound2* samplerSound2 = new HSamplerSound2(
 		"Sample2",
 		*audioFormatReader2,
 		samplerSoundRange,
@@ -264,7 +264,7 @@ void HappySamplerAudioProcessor::loadFile2()
 
 }
 
-void HappySamplerAudioProcessor::loadFile() 
+void HappySamplerAudioProcessor::loadFile()
 {	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
 
@@ -272,8 +272,8 @@ void HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
-	/*	loadedSample.setSize(1, numberOfLoadedSample);
-		auto buffer = loadedSample.getReadPointer(0);*/
+		/*	loadedSample.setSize(1, numberOfLoadedSample);
+			auto buffer = loadedSample.getReadPointer(0);*/
 	}
 
 	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
@@ -293,7 +293,7 @@ void HappySamplerAudioProcessor::loadFile()
 		5.0);
 
 	synthesiser.addSound(samplerSound);
-} 
+}
 
 void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
@@ -321,20 +321,22 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 
 void HappySamplerAudioProcessor::updateGainControl()
 {
-	
+
+	for (int i = 0; i < synthesiser.getNumVoices(); i++)
+	{
 		// gets sounds an makes sure it is a SamplerSound (so setGainControlParameters works)
 		// prevents program from crashing in case of exceptions
-		if (auto voice = dynamic_cast<HSamplerVoice*>(synthesiser.getVoice(0)))
+		if (auto voice = dynamic_cast<HSamplerVoice*>(synthesiser.getVoice(i)))
 		{
 			voice->setGainControlParameters(gainControlParams);
 		}
 
-		if (auto voice2 = dynamic_cast<HSamplerVoice2*>(synthesiser.getVoice(20)))
+		if (auto voice2 = dynamic_cast<HSamplerVoice2*>(synthesiser.getVoice(i)))
 		{
 			voice2->setGainControlParameters(gainControlParams);
 		}
+	}
 
-	
 }
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
