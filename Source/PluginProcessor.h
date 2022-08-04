@@ -9,6 +9,11 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "MultiVoiceSynth.h"
+#include "GainControl.h"
+
+
+
 
 //==============================================================================
 /**
@@ -58,21 +63,37 @@ public:
 	void loadFile();
 	void loadFile2();
 	void exportFile();
+	int getCurrentSampleLength();
+	void getSampleStartValue();
+	void exportAndReloadEditedSample();
 
+	void updateGainControl();
+
+	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
+	juce::AudioBuffer<float> exportbuffer;
+
+	int sampleStart{ 0 };
+	int sampleAmountOfLoadedSample = 1;
+
+	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
+	
 	//==============================================================================
 private: 
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;
 	juce::AudioBuffer<float> editedSample;
-	juce::AudioBuffer<float> exportbuffer;
+	
 
 	MultiVoiceSynth synthesiser;
-	const int synthesiserVoices{ 9 };
+	const int synthesiserVoices{ 24 };
 
 	const int numberOfSkippedSamples = 200000;
+
+	GainControl::Parameters gainControlParams;
+
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
