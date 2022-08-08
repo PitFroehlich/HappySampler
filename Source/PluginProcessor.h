@@ -73,6 +73,8 @@ public:
 
 	void fillWaveFormBuffer();
 
+	juce::AudioBuffer<float>& getWaveFormBuffer() { return waveFormBuffer; }
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };

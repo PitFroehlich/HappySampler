@@ -32,6 +32,8 @@ public:
 
 	void sliderValueChanged(juce::Slider* slider) override;
 
+	void setPaintWaveFormToTrue();
+
 private:
 	juce::TextButton loadButton{ "Load1" };
 	juce::TextButton loadButton2{ "Load2" };
@@ -41,6 +43,10 @@ private:
 	juce::Slider sliderChangeSample{ "Sample Start" };
 	juce::Slider sliderGainControl1{ "Gain Control" };
 	juce::Slider sliderGainControl2{ "Gain Control" };
+
+	std::vector<float> audioPointsFromWaveForm;
+
+	bool paintWaveForm = false;
 
 	double sliderChangeSampleValue;
 
