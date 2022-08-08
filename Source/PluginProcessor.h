@@ -69,6 +69,8 @@ public:
 
 	void updateGainControl();
 
+	void setExportBuffer();
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
@@ -76,6 +78,9 @@ public:
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
+
+	int thisIsTheNumberofSample1;
+	int thisIsTheNumberofSample2;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
 	
