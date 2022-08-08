@@ -264,8 +264,34 @@ void HappySamplerAudioProcessor::loadFile2()
 
 }
 
+void HappySamplerAudioProcessor::setExportBuffer() {
+	//Setting right size for exportBuffer
+	exportbuffer.setSize(
+		audioFormatReader->numChannels,
+		sampleAmountOfLoadedSample - sampleStart,
+		false,
+		false,
+		false
+	);
+
+	//fill exportBuffer with audio 
+	audioFormatReader->read(
+		&exportbuffer,
+		0,
+		sampleAmountOfLoadedSample - sampleStart,
+		sampleStart,
+		true,
+		false
+	);
+
+	DBG(exportbuffer.getNumSamples(););
+}
+
 void HappySamplerAudioProcessor::loadFile()
-{	//creates a dialog box to choose a file 
+{
+	//removes existing sound or everything gets messy 
+	synthesiser.removeSound(thisIsTheNumberofSample1);
+	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
 
 	if (filechooser.browseForFileToOpen())
@@ -293,6 +319,7 @@ void HappySamplerAudioProcessor::loadFile()
 		5.0);
 
 	synthesiser.addSound(samplerSound);
+	thisIsTheNumberofSample1 = synthesiser.getNumSounds() - 1;
 }
 
 void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
@@ -314,6 +341,7 @@ void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
 	);
 
 	exportFile();
+
 	loadFile();
 
 }
