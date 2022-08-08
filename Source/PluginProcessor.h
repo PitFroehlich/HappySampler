@@ -71,10 +71,13 @@ public:
 
 	void setExportBuffer();
 
+	void fillWaveFormBuffer();
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
+	juce::AudioBuffer<float> waveFormBuffer;
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;

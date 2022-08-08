@@ -319,7 +319,16 @@ void HappySamplerAudioProcessor::loadFile()
 		5.0);
 
 	synthesiser.addSound(samplerSound);
+
+	fillWaveFormBuffer();
+
 	thisIsTheNumberofSample1 = synthesiser.getNumSounds() - 1;
+}
+
+void HappySamplerAudioProcessor::fillWaveFormBuffer() {
+	waveFormBuffer.setSize(1, sampleAmountOfLoadedSample);
+
+	audioFormatReader->read(&waveFormBuffer, 0, sampleAmountOfLoadedSample, 0, true, false); 
 }
 
 void HappySamplerAudioProcessor::exportAndReloadEditedSample() {

@@ -46,7 +46,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(sliderChangeSample);
 	addAndMakeVisible(sliderGainControl1);
 	addAndMakeVisible(sliderGainControl2);
-	setSize(400, 300);
+	setSize(800, 600);
 
 	// Make sure that before the constructor has finished, you've set the
 	// editor's size to whatever you need it to be.
@@ -64,16 +64,16 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 
 	g.setColour(juce::Colours::white);
 	g.setFont(15.0f);
-	g.drawFittedText("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+	//g.drawFittedText("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void HappySamplerAudioProcessorEditor::resized()
 {
-	loadButton.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
-	loadButton2.setBounds(getWidth() / 2 - 200, getHeight() / 2 - 50, 100, 100);
-	exportButton.setBounds(getWidth() / 2 + 100 ,getHeight() / 2 - 50, 100, 100);
-	buttonApply.setBoundsRelative(0.5, 0.9, 0.4, 0.1);
-	sliderChangeSample.setBoundsRelative(0.5,0.7,0.4,0.2);
+	loadButton.setBounds(getWidth() - 110, getHeight() / 2 - 300, 100, 50);
+	loadButton2.setBounds(getWidth() - 220, getHeight() / 2 - 300, 100, 50);
+	exportButton.setBounds(getWidth() - 330 ,getHeight() / 2 - 300, 100, 50);
+	buttonApply.setBounds(getWidth() - 440,getHeight() / 2 - 300, 100, 50);
+	sliderChangeSample.setBoundsRelative(0.01,0.30,0.4,0.2);
 	sliderGainControl1.setBoundsRelative(0.01,0.0,0.4,0.2);
 	sliderGainControl2.setBoundsRelative(0.01,0.15,0.4,0.2);
 	// This is generally where you'll want to lay out the positions of any
