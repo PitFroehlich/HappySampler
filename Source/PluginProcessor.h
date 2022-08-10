@@ -73,6 +73,10 @@ public:
 
 	void fillWaveFormBuffer();
 
+	juce::File getFile();
+
+	juce::AudioFormatManager* getAudioFormatManager();
+
 	juce::AudioBuffer<float>& getWaveFormBuffer() { return waveFormBuffer; }
 
 	//==============================================================================
@@ -91,6 +95,8 @@ public:
 	
 	//==============================================================================
 private: 
+	juce::File loadedFile1;
+
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;

@@ -18,8 +18,10 @@
 //==============================================================================
 /**
 */
-class HappySamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
-										 public juce::Slider::Listener
+class HappySamplerAudioProcessorEditor : 
+	public juce::AudioProcessorEditor,
+	public juce::Slider::Listener
+
 
 {
 public:
@@ -34,7 +36,17 @@ public:
 
 	void setPaintWaveFormToTrue();
 
+	void paintIfFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
+
+	void paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
+
 private:
+
+	//juce::AudioFormatManager audioFormatManager;
+
+	juce::AudioThumbnailCache audioThumbnailCache;
+	juce::AudioThumbnail audioThumbnail;
+
 	juce::TextButton loadButton{ "Load1" };
 	juce::TextButton loadButton2{ "Load2" };
 	juce::TextButton exportButton{ "Export" };

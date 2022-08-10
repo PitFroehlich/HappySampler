@@ -10,18 +10,19 @@
 #include "PluginEditor.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
+#include "WaveForm.h"
 
 //==============================================================================
 HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor& p)
-	: AudioProcessorEditor(&p), audioProcessor(p)
-
-
-{
+	: AudioProcessorEditor(&p), audioProcessor(p),
+	audioThumbnailCache(5),
+	audioThumbnail(512, *audioProcessor.getAudioFormatManager(), audioThumbnailCache)
+{	// Ich glaube das Problem liegt darin, dass er den Audioformatmanager aufruft, bevor die Daten da sind
 	loadButton.onClick = [&]() { 
 		audioProcessor.loadFile();
 		setPaintWaveFormToTrue();
 	};
-		
+
 	addAndMakeVisible(loadButton);
 
 	loadButton2.onClick = [&]() { audioProcessor.loadFile2();  };
@@ -52,6 +53,8 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	addAndMakeVisible(sliderGainControl1);
 	addAndMakeVisible(sliderGainControl2);
 	setSize(800, 600);
+
+	//audioFormatManager = &audioProcessor.getAudioFormatManager();
 
 	// Make sure that before the constructor has finished, you've set the
 	// editor's size to whatever you need it to be.
@@ -91,9 +94,18 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 			audioPointsFromWaveForm.push_back(buffer[sample]);
 		}
 
-		
+		//path.startNewSubPath(getWidth() / 2, getHeight() / 2);
 
-		path.startNewSubPath(0, getHeight() - 200);
+		juce::File file = audioProcessor.getFile();
+
+		audioThumbnail.setSource(new juce::FileInputSource(file));
+
+		juce::Rectangle<int> thumbnailBounds(10, 100, getWidth() - 20, getHeight() - 120);
+
+		if (audioThumbnail.getNumChannels() == 0)
+			paintIfNoFileLoaded(g, thumbnailBounds);
+		else
+			paintIfFileLoaded(g, thumbnailBounds);
 
 		//scale on yAxis  and connects the points with lines 
 		for (int sample = 0; sample < audioPointsFromWaveForm.size(); ++sample)
@@ -104,8 +116,30 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 
 		// draws the waveform
 		g.strokePath(path, juce::PathStrokeType(2));
-	}
 
+	}
+}
+
+void HappySamplerAudioProcessorEditor::paintIfFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
+{
+	g.setColour(juce::Colours::white);
+	g.fillRect(thumbnailBounds);
+
+	g.setColour(juce::Colours::red);                               // [8]
+
+	audioThumbnail.drawChannels(g,                                      // [9]
+		thumbnailBounds,
+		0.0,                                    // start time
+		audioThumbnail.getTotalLength(),             // end time
+		1.0f);                                  // vertical zoom
+}
+
+void HappySamplerAudioProcessorEditor::paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
+{
+	g.setColour(juce::Colours::darkgrey);
+	g.fillRect(thumbnailBounds);
+	g.setColour(juce::Colours::white);
+	g.drawFittedText("No File Loaded", thumbnailBounds, juce::Justification::centred, 1);
 }
 
 void HappySamplerAudioProcessorEditor::resized()
@@ -126,7 +160,6 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	{
 		audioProcessor.sampleStart = sliderChangeSample.getValue()
 			* audioProcessor.sampleAmountOfLoadedSample;
-		DBG(audioProcessor.sampleStart;);
 	}
 	if (slider == &sliderGainControl1)
 	{

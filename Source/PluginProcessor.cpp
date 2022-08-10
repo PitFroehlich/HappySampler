@@ -298,6 +298,8 @@ void HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+		loadedFile1 = choosenFile;
 		/*	loadedSample.setSize(1, numberOfLoadedSample);
 			auto buffer = loadedSample.getReadPointer(0);*/
 	}
@@ -379,6 +381,16 @@ void HappySamplerAudioProcessor::updateGainControl()
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
 }
+//==============================================================================
+juce::AudioFormatManager* HappySamplerAudioProcessor::getAudioFormatManager() {
+	return &audioFormatManager;
+	DBG("This works");
+}
+//==============================================================================
+juce::File HappySamplerAudioProcessor::getFile() {
+	return loadedFile1;
+}
+
 //
 //double HappySamplerAudioProcessor::getGainControl1() {
 //	return gainControl1;
@@ -398,3 +410,4 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
 	return new HappySamplerAudioProcessor();
 }
+
