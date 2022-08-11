@@ -72,6 +72,10 @@ public:
 	void setExportBuffer();
 
 	void fillWaveFormBuffer();
+	//==============================================================================
+	juce::AudioThumbnail getAudioThumbnail();
+	//==============================================================================
+
 
 	juce::File getFile();
 
@@ -92,9 +96,16 @@ public:
 	int thisIsTheNumberofSample2;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
-	
+
+	//==============================================================================
+	//Waveform Visualization 
+	juce::AudioThumbnailCache audioThumbnailCache;
+	juce::AudioThumbnail audioThumbnail;
 	//==============================================================================
 private: 
+
+	
+
 	juce::File loadedFile1;
 
 	juce::WavAudioFormat wavAudioFormat;

@@ -19,7 +19,9 @@
 //==============================================================================
 HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-	: AudioProcessor(BusesProperties()
+	: audioThumbnailCache(5),
+	audioThumbnail(100, audioFormatManager, audioThumbnailCache),
+	AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
 #if ! JucePlugin_IsSynth
 		.withInput("Input", juce::AudioChannelSet::stereo(), true)
@@ -302,6 +304,9 @@ void HappySamplerAudioProcessor::loadFile()
 		loadedFile1 = choosenFile;
 		/*	loadedSample.setSize(1, numberOfLoadedSample);
 			auto buffer = loadedSample.getReadPointer(0);*/
+
+		//sets loaded file as source for lo res thumbnail
+		audioThumbnail.setSource(new juce::FileInputSource(choosenFile));
 	}
 
 	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
@@ -390,6 +395,8 @@ juce::AudioFormatManager* HappySamplerAudioProcessor::getAudioFormatManager() {
 juce::File HappySamplerAudioProcessor::getFile() {
 	return loadedFile1;
 }
+
+
 
 //
 //double HappySamplerAudioProcessor::getGainControl1() {
