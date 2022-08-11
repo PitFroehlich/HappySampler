@@ -8,3 +8,4 @@ Buglist:
 * do i need edit gaincontrol in SamplerSound AND SamplerVoice???
 * gain sliders need to start in the middle at 1 and need to go to 2 and down to 0 
 * App ist too slow 
+* Thumbnail only reloads when i move frame out of window maybe try to refresh gui 
