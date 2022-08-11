@@ -71,10 +71,23 @@ public:
 
 	void setExportBuffer();
 
+	void fillWaveFormBuffer();
+	//==============================================================================
+	juce::AudioThumbnail getAudioThumbnail();
+	//==============================================================================
+
+
+	juce::File getFile();
+
+	juce::AudioFormatManager* getAudioFormatManager();
+
+	juce::AudioBuffer<float>& getWaveFormBuffer() { return waveFormBuffer; }
+
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
+	juce::AudioBuffer<float> waveFormBuffer;
 
 	int sampleStart{ 0 };
 	int sampleAmountOfLoadedSample = 1;
@@ -83,9 +96,18 @@ public:
 	int thisIsTheNumberofSample2;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
-	
+
+	//==============================================================================
+	//Waveform Visualization 
+	juce::AudioThumbnailCache audioThumbnailCache;
+	juce::AudioThumbnail audioThumbnail;
 	//==============================================================================
 private: 
+
+	
+
+	juce::File loadedFile1;
+
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;

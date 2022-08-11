@@ -19,7 +19,9 @@
 //==============================================================================
 HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-	: AudioProcessor(BusesProperties()
+	: audioThumbnailCache(5),
+	audioThumbnail(100, audioFormatManager, audioThumbnailCache),
+	AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
 #if ! JucePlugin_IsSynth
 		.withInput("Input", juce::AudioChannelSet::stereo(), true)
@@ -298,8 +300,13 @@ void HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+		loadedFile1 = choosenFile;
 		/*	loadedSample.setSize(1, numberOfLoadedSample);
 			auto buffer = loadedSample.getReadPointer(0);*/
+
+		//sets loaded file as source for lo res thumbnail
+		audioThumbnail.setSource(new juce::FileInputSource(choosenFile));
 	}
 
 	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
@@ -319,7 +326,16 @@ void HappySamplerAudioProcessor::loadFile()
 		5.0);
 
 	synthesiser.addSound(samplerSound);
+
+	fillWaveFormBuffer();
+
 	thisIsTheNumberofSample1 = synthesiser.getNumSounds() - 1;
+}
+
+void HappySamplerAudioProcessor::fillWaveFormBuffer() {
+	waveFormBuffer.setSize(1, sampleAmountOfLoadedSample);
+
+	audioFormatReader->read(&waveFormBuffer, 0, sampleAmountOfLoadedSample, 0, true, false); 
 }
 
 void HappySamplerAudioProcessor::exportAndReloadEditedSample() {
@@ -370,6 +386,18 @@ void HappySamplerAudioProcessor::updateGainControl()
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
 }
+//==============================================================================
+juce::AudioFormatManager* HappySamplerAudioProcessor::getAudioFormatManager() {
+	return &audioFormatManager;
+	DBG("This works");
+}
+//==============================================================================
+juce::File HappySamplerAudioProcessor::getFile() {
+	return loadedFile1;
+}
+
+
+
 //
 //double HappySamplerAudioProcessor::getGainControl1() {
 //	return gainControl1;
@@ -389,3 +417,4 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
 	return new HappySamplerAudioProcessor();
 }
+
