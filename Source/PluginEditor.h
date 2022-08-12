@@ -28,7 +28,8 @@ public:
 	HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor&);
 	~HappySamplerAudioProcessorEditor() override;
 
-	//==============================================================================
+
+
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
@@ -40,17 +41,23 @@ public:
 		juce::Graphics& g,
 		const juce::Rectangle<int>& audioThumbnailBounds);
 
+	void paintPlayHead(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+
 private:
 
 	//juce::AudioFormatManager audioFormatManager;
 
 
-	juce::TextButton loadButton{ "Load1" };
-	juce::TextButton loadButton2{ "Load2" };
-	juce::TextButton exportButton{ "Export" };
-	juce::TextButton buttonApply{ "Apply" };
+	juce::TextButton loadButton{ "Load" };
+	juce::TextButton buttonApply{ "Apply" }; //grün
+	juce::TextButton buttonApply1{ "Apply" }; //blau 
+	juce::TextButton buttonApply2{ "Apply" }; //rot
 
 	juce::Slider sliderChangeSample{ "Sample Start" };
+	juce::Slider sliderChangeSample1{ "Sample Start" };
+	juce::Slider sliderChangeSample2{ "Sample Start" };
+
+	juce::Slider sliderGainControl{ "Gain Control" };
 	juce::Slider sliderGainControl1{ "Gain Control" };
 	juce::Slider sliderGainControl2{ "Gain Control" };
 
@@ -59,6 +66,9 @@ private:
 	bool paintWaveForm = false;
 
 	double sliderChangeSampleValue;
+	//==============================================================================
+	double audioPosition = 0;
+	//==============================================================================
 
 	GainControl gainControl;
 

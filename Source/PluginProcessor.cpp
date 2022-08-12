@@ -382,6 +382,43 @@ void HappySamplerAudioProcessor::updateGainControl()
 	}
 
 }
+//==============================================================================
+void HappySamplerAudioProcessor::reloadFile()
+{
+	//removes existing sound or everything gets messy 
+	synthesiser.removeSound(thisIsTheNumberofSample1);
+	//creates a dialog box to choose a file 
+	juce::FileChooser filechooser{ "Please load a file" };
+
+	auto choosenFile = juce::File() = "C:/Users/pitfr/Desktop/test.wav";
+
+		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+		loadedFile1 = choosenFile;
+		//add somethin that shows position for marker 
+
+	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
+	double sampleRateFromSample = static_cast<double>(audioFormatReader->sampleRate);
+	int bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
+
+	juce::BigInteger samplerSoundRange;
+	samplerSoundRange.setRange(0, 128, true);
+
+	HSamplerSound* samplerSound = new HSamplerSound(
+		"Sample",
+		*audioFormatReader,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
+
+	synthesiser.addSound(samplerSound);
+
+	fillWaveFormBuffer();
+
+	thisIsTheNumberofSample1 = synthesiser.getNumSounds() - 1;
+}
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;

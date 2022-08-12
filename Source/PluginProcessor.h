@@ -62,6 +62,7 @@ public:
 	//==============================================================================
 	void loadFile();
 	void loadFile2();
+	void reloadFile();
 	void exportFile();
 	int getCurrentSampleLength();
 	void getSampleStartValue();
