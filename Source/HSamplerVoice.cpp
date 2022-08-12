@@ -41,6 +41,7 @@ void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesi
 		adsr.setParameters(sound->params);
 
 		adsr.noteOn();
+
 	}
 	else
 	{

@@ -40,6 +40,8 @@ public:
 		juce::Graphics& g,
 		const juce::Rectangle<int>& audioThumbnailBounds);
 
+	void paintPlayHead(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+
 private:
 
 	//juce::AudioFormatManager audioFormatManager;

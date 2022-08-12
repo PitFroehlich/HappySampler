@@ -80,6 +80,8 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 
 		paintAudioThumbnail(g, audioThumbnailBounds);
 
+		paintPlayHead(g, audioThumbnailBounds);
+
 	}
 }
 
@@ -133,6 +135,22 @@ void HappySamplerAudioProcessorEditor::paintAudioThumbnail(
 		0.0,
 		audioProcessor.audioThumbnail.getTotalLength(),
 		1.0f);
+}
+
+void HappySamplerAudioProcessorEditor::paintPlayHead(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds)
+{
+	g.setColour(juce::Colours::green);
+
+	auto audioPosition = 0.5 /*(float)transportSource.getCurrentPosition()*/;
+
+	auto drawPosition = (audioPosition / audioProcessor.audioThumbnail.getTotalLength()) * (float)audioThumbnailBounds.getWidth()
+		+ (float)audioThumbnailBounds.getX();
+	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
+		(float)audioThumbnailBounds.getBottom(), 4.0f);
+
+
+
+
 }
 
 
