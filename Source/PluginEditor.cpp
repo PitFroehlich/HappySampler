@@ -142,7 +142,7 @@ void HappySamplerAudioProcessorEditor::paintPlayHead(juce::Graphics& g, const ju
 {
 	g.setColour(juce::Colours::green);
 
-	auto drawPosition = (audioPosition * audioThumbnailBounds.getWidth()) * (float)audioThumbnailBounds.getWidth()
+	auto drawPosition = (audioPosition) * (float)audioThumbnailBounds.getWidth()
 		+ (float)audioThumbnailBounds.getX();
 	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
 		(float)audioThumbnailBounds.getBottom(), 4.0f);
