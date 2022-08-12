@@ -19,6 +19,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	loadButton.onClick = [&]() { 
 		audioProcessor.loadFile();
 		setPaintWaveFormToTrue();
+		repaint();
 	};
 
 	addAndMakeVisible(loadButton);
@@ -104,7 +105,8 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 			* audioProcessor.sampleAmountOfLoadedSample;
 
 		audioPosition = sliderChangeSample.getValue();
-	}
+		repaint();
+	}   
 	if (slider == &sliderGainControl1)
 	{
 		audioProcessor.getGainControlParameters().gainValue1 = sliderGainControl1.getValue();
