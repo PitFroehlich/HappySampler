@@ -119,6 +119,8 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 		paintAudioThumbnail(g, audioThumbnailBounds);
 
 		paintPlayHead(g, audioThumbnailBounds);
+		paintPlayHead1(g, audioThumbnailBounds);
+		paintPlayHead2(g, audioThumbnailBounds);
 	}
 }
 
@@ -146,11 +148,32 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 
 		audioPosition = sliderChangeSample.getValue();
 		repaint();
+	} 
+	if (slider == &sliderChangeSample1)
+	{
+		/*audioProcessor.sampleStart = sliderChangeSample.getValue()
+			* audioProcessor.sampleAmountOfLoadedSample;*/
+
+		audioPosition1 = sliderChangeSample1.getValue();
+		repaint();
 	}   
-	if (slider == &sliderGainControl1)
+	if (slider == &sliderChangeSample2)
+	{
+	/*	audioProcessor.sampleStart = sliderChangeSample.getValue()
+			* audioProcessor.sampleAmountOfLoadedSample;*/
+
+		audioPosition2 = sliderChangeSample2.getValue();
+		repaint();
+	}   
+	if (slider == &sliderGainControl)
 	{
 		audioProcessor.getGainControlParameters().gainValue1 = sliderGainControl1.getValue();
 	}
+	if (slider == &sliderGainControl1)
+	{
+		audioProcessor.getGainControlParameters().gainValue2 = sliderGainControl2.getValue();
+	}
+	audioProcessor.updateGainControl();
 	if (slider == &sliderGainControl2)
 	{
 		audioProcessor.getGainControlParameters().gainValue2 = sliderGainControl2.getValue();
@@ -185,6 +208,26 @@ void HappySamplerAudioProcessorEditor::paintPlayHead(juce::Graphics& g, const ju
 	g.setColour(juce::Colours::green);
 
 	auto drawPosition = (audioPosition) * (float)audioThumbnailBounds.getWidth()
+		+ (float)audioThumbnailBounds.getX();
+	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
+		(float)audioThumbnailBounds.getBottom(), 4.0f);
+}
+
+void HappySamplerAudioProcessorEditor::paintPlayHead1(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds)
+{
+	g.setColour(juce::Colours::red);
+
+	auto drawPosition = (audioPosition1) * (float)audioThumbnailBounds.getWidth()
+		+ (float)audioThumbnailBounds.getX();
+	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
+		(float)audioThumbnailBounds.getBottom(), 4.0f);
+}
+
+void HappySamplerAudioProcessorEditor::paintPlayHead2(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds)
+{
+	g.setColour(juce::Colours::blue);
+
+	auto drawPosition = (audioPosition2) * (float)audioThumbnailBounds.getWidth()
 		+ (float)audioThumbnailBounds.getX();
 	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
 		(float)audioThumbnailBounds.getBottom(), 4.0f);
