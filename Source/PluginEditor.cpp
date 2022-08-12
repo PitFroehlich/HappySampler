@@ -81,7 +81,6 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 		paintAudioThumbnail(g, audioThumbnailBounds);
 
 		paintPlayHead(g, audioThumbnailBounds);
-
 	}
 }
 
@@ -103,6 +102,8 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	{
 		audioProcessor.sampleStart = sliderChangeSample.getValue()
 			* audioProcessor.sampleAmountOfLoadedSample;
+
+		audioPosition = sliderChangeSample.getValue();
 	}
 	if (slider == &sliderGainControl1)
 	{
@@ -141,16 +142,10 @@ void HappySamplerAudioProcessorEditor::paintPlayHead(juce::Graphics& g, const ju
 {
 	g.setColour(juce::Colours::green);
 
-	auto audioPosition = 0.5 /*(float)transportSource.getCurrentPosition()*/;
-
-	auto drawPosition = (audioPosition / audioProcessor.audioThumbnail.getTotalLength()) * (float)audioThumbnailBounds.getWidth()
+	auto drawPosition = (audioPosition * audioThumbnailBounds.getWidth()) * (float)audioThumbnailBounds.getWidth()
 		+ (float)audioThumbnailBounds.getX();
 	g.drawLine(drawPosition, (float)audioThumbnailBounds.getY(), drawPosition,
 		(float)audioThumbnailBounds.getBottom(), 4.0f);
-
-
-
-
 }
 
 

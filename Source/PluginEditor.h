@@ -28,7 +28,8 @@ public:
 	HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor&);
 	~HappySamplerAudioProcessorEditor() override;
 
-	//==============================================================================
+
+
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
@@ -61,6 +62,9 @@ private:
 	bool paintWaveForm = false;
 
 	double sliderChangeSampleValue;
+	//==============================================================================
+	double audioPosition = 0;
+	//==============================================================================
 
 	GainControl gainControl;
 
