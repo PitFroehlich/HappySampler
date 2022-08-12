@@ -19,7 +19,6 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	loadButton.onClick = [&]() { 
 		audioProcessor.loadFile();
 		setPaintWaveFormToTrue();
-		
 	};
 
 	addAndMakeVisible(loadButton);
@@ -33,6 +32,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	buttonApply.onClick = [&]() {
 		audioProcessor.setExportBuffer();
 		audioProcessor.exportFile();
+		audioProcessor.reloadFile();
 		};
 	addAndMakeVisible(buttonApply);
 
