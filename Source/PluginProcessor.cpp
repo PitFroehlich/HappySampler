@@ -284,29 +284,6 @@ void HappySamplerAudioProcessor::loadFile()
 		synthesiser.addSound(samplerSound);
 		soundToRemove = synthesiser.getNumSounds() - 1;
 
-		HSamplerSound2* samplerSound2 = new HSamplerSound2(
-			"Sample2",
-			*audioFormatReader1,
-			samplerSoundRange,
-			60,
-			0.1,
-			0.1,
-			5.0);
-
-		synthesiser.addSound(samplerSound2);
-		soundToRemove2 = synthesiser.getNumSounds() - 1;
-		
-		HSamplerSound3* samplerSound3 = new HSamplerSound3(
-			"Sample3",
-			*audioFormatReader2,
-			samplerSoundRange,
-			60,
-			0.1,
-			0.1,
-			5.0);
-
-		synthesiser.addSound(samplerSound3);
-		soundToRemove3 = synthesiser.getNumSounds() - 1;
 }
 
 void HappySamplerAudioProcessor::updateGainControl()

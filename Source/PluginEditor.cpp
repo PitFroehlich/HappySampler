@@ -29,16 +29,35 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 		audioProcessor.setExportBuffer(audioProcessor.audioFormatReader, audioProcessor.sampleStart);
 		audioProcessor.exportFile("sample");
 		audioProcessor.reloadFile(audioProcessor.soundToRemove, "sample", audioProcessor.audioFormatReader, "green");
+		
+		sliderChangeSample1.setBoundsRelative(0.01, 0.15, 0.2, 0.2);
+
+
+		
 	};
 	buttonApply1.onClick = [&]() {
 		audioProcessor.setExportBuffer(audioProcessor.audioFormatReader1, audioProcessor.sampleStart1);
 		audioProcessor.exportFile("sample1");
 		audioProcessor.reloadFile(audioProcessor.soundToRemove2, "sample1", audioProcessor.audioFormatReader1, "red");
+
+		sliderGainControl1.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+		sliderGainControl1.setRange(0, 2, 0.001);
+		sliderGainControl1.addListener(this);
+		sliderGainControl1.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::red);
+
+		addAndMakeVisible(sliderGainControl1);
 	};
 	buttonApply2.onClick = [&]() {
 		audioProcessor.setExportBuffer(audioProcessor.audioFormatReader2, audioProcessor.sampleStart2);
 		audioProcessor.exportFile("sample2");
 		audioProcessor.reloadFile(audioProcessor.soundToRemove3, "sample2", audioProcessor.audioFormatReader2, "blue");
+
+		sliderGainControl2.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+		sliderGainControl2.setRange(0, 2, 0.001);
+		sliderGainControl2.addListener(this);
+		sliderGainControl2.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::blue);
+
+		addAndMakeVisible(sliderGainControl2);
 	};
 
 	buttonApply.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colours::green);
@@ -65,21 +84,13 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	sliderGainControl.addListener(this);
 	sliderGainControl.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::green);
 
-	sliderGainControl1.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	sliderGainControl1.setRange(0, 2, 0.001);
-	sliderGainControl1.addListener(this);
-	sliderGainControl1.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::red);
-	
-	sliderGainControl2.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	sliderGainControl2.setRange(0, 2, 0.001);
-	sliderGainControl2.addListener(this);
-	sliderGainControl2.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::blue);
 
+	
+	
 	
 
 	addAndMakeVisible(sliderGainControl);
-	addAndMakeVisible(sliderGainControl1);
-	addAndMakeVisible(sliderGainControl2);
+
 
 	setSize(800, 600);
 
@@ -120,7 +131,6 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 		addAndMakeVisible(sliderChangeSample);
 		addAndMakeVisible(sliderChangeSample1);
 		addAndMakeVisible(sliderChangeSample2);
-
 
 	}
 
