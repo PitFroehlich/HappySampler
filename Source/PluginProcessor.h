@@ -60,17 +60,21 @@ public:
 	void getStateInformation(juce::MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
 	//==============================================================================
-	void loadFile();
-	void loadFile2();
-	void reloadFile();
-	void exportFile();
+	int loadFile();
+
+	int reloadFile(
+		int soundToRemove,
+		std::string fileToOpen,
+		juce::AudioFormatReader* audioFormatReaderToUse,
+		std::string colourOfSample);
+
+	void exportFile(std::string fileName);
 	int getCurrentSampleLength();
 	void getSampleStartValue();
-	void exportAndReloadEditedSample();
 
 	void updateGainControl();
 
-	void setExportBuffer();
+	void setExportBuffer(juce::AudioFormatReader* audioFormatReaderToUse);
 
 	void fillWaveFormBuffer();
 	//==============================================================================
@@ -95,6 +99,8 @@ public:
 
 	int thisIsTheNumberofSample1;
 	int thisIsTheNumberofSample2;
+
+	int sampleToRemove;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
 
