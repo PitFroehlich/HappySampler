@@ -60,7 +60,7 @@ public:
 	void getStateInformation(juce::MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
 	//==============================================================================
-	int loadFile();
+	void loadFile();
 
 	int reloadFile(
 		int soundToRemove,
@@ -74,7 +74,7 @@ public:
 
 	void updateGainControl();
 
-	void setExportBuffer(juce::AudioFormatReader* audioFormatReaderToUse);
+	void setExportBuffer(juce::AudioFormatReader* audioFormatReaderToUse, int sampleStartToUse);
 
 	void fillWaveFormBuffer();
 	//==============================================================================
@@ -95,12 +95,16 @@ public:
 	juce::AudioBuffer<float> waveFormBuffer;
 
 	int sampleStart{ 0 };
+	int sampleStart1{ 0 };
+	int sampleStart2{ 0 };
 	int sampleAmountOfLoadedSample = 1;
 
 	int thisIsTheNumberofSample1;
 	int thisIsTheNumberofSample2;
 
-	int sampleToRemove;
+	int soundToRemove;
+	int soundToRemove2;
+	int soundToRemove3;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
 
@@ -108,6 +112,10 @@ public:
 	//Waveform Visualization 
 	juce::AudioThumbnailCache audioThumbnailCache;
 	juce::AudioThumbnail audioThumbnail;
+	//==============================================================================
+	juce::AudioFormatReader* audioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFormatReader1{ nullptr };
+	juce::AudioFormatReader* audioFormatReader2{ nullptr };
 	//==============================================================================
 private: 
 
@@ -132,8 +140,7 @@ private:
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
-	juce::AudioFormatReader* audioFormatReader{ nullptr };
-	juce::AudioFormatReader* audioFormatReader2{ nullptr };
+	
 	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
 
 	juce::AudioFormatWriter* audioFormatWriter{ nullptr };

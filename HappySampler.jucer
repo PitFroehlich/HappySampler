@@ -10,6 +10,16 @@
       <GROUP id="{A7574F2D-A849-D43C-C0A3-AF4114CAA220}" name="CustomAudio">
         <FILE id="sGIjs2" name="GainControl.cpp" compile="1" resource="0" file="Source/GainControl.cpp"/>
         <FILE id="tbrPPf" name="GainControl.h" compile="0" resource="0" file="Source/GainControl.h"/>
+        <GROUP id="{A2C72F0B-FA23-97C9-4B3B-4C4258BAE534}" name="HSampler3">
+          <FILE id="hnqJ22" name="HSamplerSound3.cpp" compile="1" resource="0"
+                file="Source/HSamplerSound3.cpp"/>
+          <FILE id="iO1YVf" name="HSamplerSound3.h" compile="0" resource="0"
+                file="Source/HSamplerSound3.h"/>
+          <FILE id="ZVQciL" name="HSamplerVoice3.cpp" compile="1" resource="0"
+                file="Source/HSamplerVoice3.cpp"/>
+          <FILE id="cQewVR" name="HSamplerVoice3.h" compile="0" resource="0"
+                file="Source/HSamplerVoice3.h"/>
+        </GROUP>
         <GROUP id="{3F9A023C-B7A6-F517-9D1B-01BBC713B99D}" name="HSampler2">
           <FILE id="QBpTdr" name="HSamplerSound2.cpp" compile="1" resource="0"
                 file="Source/HSamplerSound2.cpp"/>

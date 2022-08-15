@@ -49,6 +49,7 @@ private:
 
 	//juce::AudioFormatManager audioFormatManager;
 
+	bool waveformIsAvailable = false;
 
 	juce::TextButton loadButton{ "Load" };
 	juce::TextButton buttonApply{ "Apply" }; //grün

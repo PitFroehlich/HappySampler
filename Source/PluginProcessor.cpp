@@ -14,6 +14,8 @@
 #include "HSamplerSound2.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
+#include "HSamplerSound3.h"
+#include "HSamplerVoice3.h"
 
 
 //==============================================================================
@@ -33,18 +35,25 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 
 	//This is the constructor 
 {
-	//This makes basic audio formats available
+
+	////This makes basic audio formats available
 	audioFormatManager.registerBasicFormats();
-	// Adds SamplerVoices to the first half
-	for (int i = 0; i < synthesiserVoices / 2; i++)
+
+
+	for (int i = 0; i < synthesiserVoices / 3; i++)
 	{
 		synthesiser.addVoice(new HSamplerVoice);
 	}
 
 	// Adds SamplerVoices2 to the second half
-	for (int i = synthesiserVoices / 2; i < synthesiserVoices; i++)
+	for (int i = synthesiserVoices / 3; i < ((synthesiserVoices / 3) * 2); i++)
 	{
 		synthesiser.addVoice(new HSamplerVoice2);
+	}
+
+	for (int i = ((synthesiserVoices / 3) * 2); i < synthesiserVoices; i++)
+	{
+		synthesiser.addVoice(new HSamplerVoice3);
 	}
 }
 // This is the destructor 
@@ -189,10 +198,6 @@ void HappySamplerAudioProcessor::setStateInformation(const void* data, int sizeI
 
 void HappySamplerAudioProcessor::exportFile(std::string fileName)
 {
-	//exportbuffer.setSize(2, 10000);
-
-	// do something with buffer
-
 	juce::File file("C:/Users/pitfr/Desktop/" + fileName + ".wav");
 	file.deleteFile();
 
@@ -211,11 +216,13 @@ void HappySamplerAudioProcessor::exportFile(std::string fileName)
 
 }
 
-void HappySamplerAudioProcessor::setExportBuffer(juce::AudioFormatReader* audioFormatReaderToUse) {
+void HappySamplerAudioProcessor::setExportBuffer(
+	juce::AudioFormatReader* audioFormatReaderToUse,
+	int sampleStartToUse) {
 	//Setting right size for exportBuffer
 	exportbuffer.setSize(
 		audioFormatReaderToUse->numChannels,
-		sampleAmountOfLoadedSample - sampleStart,
+		sampleAmountOfLoadedSample - sampleStartToUse,
 		false,
 		false,
 		false
@@ -233,10 +240,10 @@ void HappySamplerAudioProcessor::setExportBuffer(juce::AudioFormatReader* audioF
 
 }
 
-int HappySamplerAudioProcessor::loadFile()
+void HappySamplerAudioProcessor::loadFile()
 {
 	//removes existing sounds or everything gets messy 
-	for (int sounds = 0; sounds < synthesiser.getNumSounds(); sounds++)
+	for (int sounds = 0; sounds <= synthesiser.getNumSounds(); sounds++)
 	{
 		synthesiser.removeSound(sounds);
 	}
@@ -248,6 +255,8 @@ int HappySamplerAudioProcessor::loadFile()
 	{
 		auto choosenFile = filechooser.getResult();
 		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+		audioFormatReader1 = audioFormatManager.createReaderFor(choosenFile);
+		audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile);
 
 		loadedFile1 = choosenFile;
 
@@ -262,25 +271,46 @@ int HappySamplerAudioProcessor::loadFile()
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-	HSamplerSound* samplerSound = new HSamplerSound(
-		"Sample",
-		*audioFormatReader,
-		samplerSoundRange,
-		60,
-		0.1,
-		0.1,
-		5.0);
 
-	synthesiser.addSound(samplerSound);
+		HSamplerSound* samplerSound = new HSamplerSound(
+			"Sample",
+			*audioFormatReader,
+			samplerSoundRange,
+			60,
+			0.1,
+			0.1,
+			5.0);
 
-	sampleToRemove = synthesiser.getNumSounds() - 1;
+		synthesiser.addSound(samplerSound);
+		soundToRemove = synthesiser.getNumSounds() - 1;
 
-	return sampleToRemove;
+		HSamplerSound2* samplerSound2 = new HSamplerSound2(
+			"Sample2",
+			*audioFormatReader1,
+			samplerSoundRange,
+			60,
+			0.1,
+			0.1,
+			5.0);
+
+		synthesiser.addSound(samplerSound2);
+		soundToRemove2 = synthesiser.getNumSounds() - 1;
+		
+		HSamplerSound3* samplerSound3 = new HSamplerSound3(
+			"Sample3",
+			*audioFormatReader2,
+			samplerSoundRange,
+			60,
+			0.1,
+			0.1,
+			5.0);
+
+		synthesiser.addSound(samplerSound3);
+		soundToRemove3 = synthesiser.getNumSounds() - 1;
 }
 
 void HappySamplerAudioProcessor::updateGainControl()
 {
-
 	for (int i = 0; i < synthesiser.getNumVoices(); i++)
 	{
 		// gets sounds an makes sure it is a SamplerSound (so setGainControlParameters works)
@@ -293,6 +323,10 @@ void HappySamplerAudioProcessor::updateGainControl()
 		if (auto voice2 = dynamic_cast<HSamplerVoice2*>(synthesiser.getVoice(i)))
 		{
 			voice2->setGainControlParameters(gainControlParams);
+		}
+		if (auto voice3 = dynamic_cast<HSamplerVoice3*>(synthesiser.getVoice(i)))
+		{
+			voice3->setGainControlParameters(gainControlParams);
 		}
 	}
 
