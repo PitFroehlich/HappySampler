@@ -6,15 +6,20 @@
               defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="L7WEx6" name="HappySampler">
     <GROUP id="{F7ACC882-3733-FD82-4B2D-A45B5D873BF4}" name="Source">
-      <GROUP id="{A5681E57-25A6-CE47-D113-4B22AA3BF9F7}" name="UI">
-        <GROUP id="{1C118519-BE87-8E92-A3E8-7E58652700F6}" name="WaveForm">
-          <FILE id="Rr4RMW" name="WaveForm.cpp" compile="1" resource="0" file="Source/WaveForm.cpp"/>
-          <FILE id="v6bRdR" name="WaveForm.h" compile="0" resource="0" file="Source/WaveForm.h"/>
-        </GROUP>
-      </GROUP>
+      <GROUP id="{A5681E57-25A6-CE47-D113-4B22AA3BF9F7}" name="UI"/>
       <GROUP id="{A7574F2D-A849-D43C-C0A3-AF4114CAA220}" name="CustomAudio">
         <FILE id="sGIjs2" name="GainControl.cpp" compile="1" resource="0" file="Source/GainControl.cpp"/>
         <FILE id="tbrPPf" name="GainControl.h" compile="0" resource="0" file="Source/GainControl.h"/>
+        <GROUP id="{A2C72F0B-FA23-97C9-4B3B-4C4258BAE534}" name="HSampler3">
+          <FILE id="hnqJ22" name="HSamplerSound3.cpp" compile="1" resource="0"
+                file="Source/HSamplerSound3.cpp"/>
+          <FILE id="iO1YVf" name="HSamplerSound3.h" compile="0" resource="0"
+                file="Source/HSamplerSound3.h"/>
+          <FILE id="ZVQciL" name="HSamplerVoice3.cpp" compile="1" resource="0"
+                file="Source/HSamplerVoice3.cpp"/>
+          <FILE id="cQewVR" name="HSamplerVoice3.h" compile="0" resource="0"
+                file="Source/HSamplerVoice3.h"/>
+        </GROUP>
         <GROUP id="{3F9A023C-B7A6-F517-9D1B-01BBC713B99D}" name="HSampler2">
           <FILE id="QBpTdr" name="HSamplerSound2.cpp" compile="1" resource="0"
                 file="Source/HSamplerSound2.cpp"/>

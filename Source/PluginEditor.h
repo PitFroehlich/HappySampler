@@ -37,16 +37,21 @@ public:
 
 	void setPaintWaveFormToTrue();
 
+	void waveformIsAvailableToTrue();
+
 	void HappySamplerAudioProcessorEditor::paintAudioThumbnail(
 		juce::Graphics& g,
 		const juce::Rectangle<int>& audioThumbnailBounds);
 
 	void paintPlayHead(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+	void paintPlayHead1(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+	void paintPlayHead2(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
 
 private:
 
 	//juce::AudioFormatManager audioFormatManager;
 
+	bool waveformIsAvailable = false;
 
 	juce::TextButton loadButton{ "Load" };
 	juce::TextButton buttonApply{ "Apply" }; //grün
@@ -68,6 +73,8 @@ private:
 	double sliderChangeSampleValue;
 	//==============================================================================
 	double audioPosition = 0;
+	double audioPosition1 = 0;
+	double audioPosition2 = 0;
 	//==============================================================================
 
 	GainControl gainControl;
