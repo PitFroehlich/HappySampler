@@ -37,6 +37,8 @@ public:
 
 	void setPaintWaveFormToTrue();
 
+	void waveformIsAvailableToTrue();
+
 	void HappySamplerAudioProcessorEditor::paintAudioThumbnail(
 		juce::Graphics& g,
 		const juce::Rectangle<int>& audioThumbnailBounds);

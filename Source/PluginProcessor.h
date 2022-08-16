@@ -62,10 +62,9 @@ public:
 	//==============================================================================
 	void loadFile();
 
-	int reloadFile(
+	void reloadFile(
 		int soundToRemove,
 		std::string fileToOpen,
-		juce::AudioFormatReader* audioFormatReaderToUse,
 		std::string colourOfSample);
 
 	void exportFile(std::string fileName);
@@ -74,7 +73,7 @@ public:
 
 	void updateGainControl();
 
-	void setExportBuffer(juce::AudioFormatReader* audioFormatReaderToUse, int sampleStartToUse);
+	void setExportBuffer(int sampleStartToUse);
 
 	void fillWaveFormBuffer();
 	//==============================================================================
@@ -97,6 +96,7 @@ public:
 	int sampleStart{ 0 };
 	int sampleStart1{ 0 };
 	int sampleStart2{ 0 };
+	int originalFileSampleAmountOfLoadedSample = 1;
 	int sampleAmountOfLoadedSample = 1;
 
 	int thisIsTheNumberofSample1;
@@ -113,6 +113,7 @@ public:
 	juce::AudioThumbnailCache audioThumbnailCache;
 	juce::AudioThumbnail audioThumbnail;
 	//==============================================================================
+	juce::AudioFormatReader* originalFileAudioFormatReader{ nullptr };
 	juce::AudioFormatReader* audioFormatReader{ nullptr };
 	juce::AudioFormatReader* audioFormatReader1{ nullptr };
 	juce::AudioFormatReader* audioFormatReader2{ nullptr };
