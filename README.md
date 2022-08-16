@@ -11,3 +11,4 @@ Buglist:
 * Thumbnail only reloads when i move frame out of window maybe try to refresh gui 
 * add some kind of data management 
 * Using Apply Button without file lets program crash so only paint them when there is a file loaded
+*adsr is missing
