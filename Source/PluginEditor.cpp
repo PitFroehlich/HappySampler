@@ -69,16 +69,18 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 	sliderChangeSample.addListener(this);
 	sliderChangeSample.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::green);
 	
+
+
 	sliderChangeSample1.setSliderStyle(juce::Slider::RotaryVerticalDrag);
 	sliderChangeSample1.setRange(0, 1, 0.001);
 	sliderChangeSample1.addListener(this);
 	sliderChangeSample1.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::red);
-	
+
 	sliderChangeSample2.setSliderStyle(juce::Slider::RotaryVerticalDrag);
 	sliderChangeSample2.setRange(0, 1, 0.001);
 	sliderChangeSample2.addListener(this);
 	sliderChangeSample2.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::blue);
-	
+
 	
 
 	
@@ -124,22 +126,30 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 		sliderGainControl.setRange(0, 2, 0.001);
 		sliderGainControl.addListener(this);
 		sliderGainControl.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::green);
-		sliderGainControl.setBoundsRelative(0.21, 0.00, 0.2, 0.2);
+		
+		sliderGainControl.setBoundsRelative(0.01, 0.00, 0.2, 0.2);
+		sliderGainControl1.setBoundsRelative(0.01, 0.15, 0.2, 0.2);
+		sliderGainControl2.setBoundsRelative(0.01, 0.30, 0.2, 0.2);
+		
 		addAndMakeVisible(sliderGainControl);
 
-		sliderChangeSample.setBoundsRelative(0.01, 0.00, 0.2, 0.2);
-		sliderChangeSample1.setBoundsRelative(0.01, 0.15, 0.2, 0.2);
-		sliderChangeSample2.setBoundsRelative(0.01, 0.30, 0.2, 0.2);
+		sliderChangeSample.setBoundsRelative(0.21, 0.00, 0.2, 0.2);
+		sliderChangeSample1.setBoundsRelative(0.21, 0.15, 0.2, 0.2);
+		sliderChangeSample2.setBoundsRelative(0.21, 0.30, 0.2, 0.2);
+
+
 
 		addAndMakeVisible(sliderChangeSample);
 		addAndMakeVisible(sliderChangeSample1);
 		addAndMakeVisible(sliderChangeSample2);
 
+	
+
 	}
 
 	if (waveformIsAvailable == true)
 	{
-		
+
 	}
 }
 
