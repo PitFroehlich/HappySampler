@@ -20,14 +20,6 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 		audioProcessor.loadFile();
 		setPaintWaveFormToTrue();
 		waveformIsAvailableToTrue();
-		
-
-		sliderGainControl.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-		sliderGainControl.setRange(0, 2, 0.001);
-		sliderGainControl.addListener(this);
-		sliderGainControl.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::green);
-		sliderGainControl.setBoundsRelative(0.21, 0.00, 0.2, 0.2);
-		addAndMakeVisible(sliderGainControl);
 		repaint();  
 	};
 
@@ -37,12 +29,8 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 		audioProcessor.setExportBuffer(audioProcessor.sampleStart);
 		audioProcessor.exportFile("sample");
 		audioProcessor.reloadFile(audioProcessor.soundToRemove, "sample", "green");
-		
-		sliderChangeSample1.setBoundsRelative(0.01, 0.15, 0.2, 0.2);
-
-
-		
 	};
+
 	buttonApply1.onClick = [&]() {
 		audioProcessor.setExportBuffer(audioProcessor.sampleStart1);
 		audioProcessor.exportFile("sample1");
@@ -132,6 +120,13 @@ void HappySamplerAudioProcessorEditor::paint(juce::Graphics& g)
 		paintPlayHead1(g, audioThumbnailBounds);
 		paintPlayHead2(g, audioThumbnailBounds);
 
+		sliderGainControl.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+		sliderGainControl.setRange(0, 2, 0.001);
+		sliderGainControl.addListener(this);
+		sliderGainControl.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, juce::Colours::green);
+		sliderGainControl.setBoundsRelative(0.21, 0.00, 0.2, 0.2);
+		addAndMakeVisible(sliderGainControl);
+
 		sliderChangeSample.setBoundsRelative(0.01, 0.00, 0.2, 0.2);
 		sliderChangeSample1.setBoundsRelative(0.01, 0.15, 0.2, 0.2);
 		sliderChangeSample2.setBoundsRelative(0.01, 0.30, 0.2, 0.2);
@@ -166,7 +161,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	if (slider == &sliderChangeSample)
 	{
 		audioProcessor.sampleStart = sliderChangeSample.getValue()
-			* audioProcessor.sampleAmountOfLoadedSample;
+			* audioProcessor.originalFileSampleAmountOfLoadedSample;
 
 		audioPosition = sliderChangeSample.getValue();
 
@@ -176,7 +171,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	if (slider == &sliderChangeSample1)
 	{
 		audioProcessor.sampleStart1 = sliderChangeSample.getValue()
-			* audioProcessor.sampleAmountOfLoadedSample;
+			* audioProcessor.originalFileSampleAmountOfLoadedSample;
 
 		audioPosition1 = sliderChangeSample1.getValue();
 		addAndMakeVisible(buttonApply1);
@@ -185,7 +180,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	if (slider == &sliderChangeSample2)
 	{
 		audioProcessor.sampleStart2 = sliderChangeSample.getValue()
-			* audioProcessor.sampleAmountOfLoadedSample;
+			* audioProcessor.originalFileSampleAmountOfLoadedSample;
 
 		audioPosition2 = sliderChangeSample2.getValue();
 		addAndMakeVisible(buttonApply2);
@@ -202,7 +197,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	audioProcessor.updateGainControl();
 	if (slider == &sliderGainControl2)
 	{
-		audioProcessor.getGainControlParameters().gainValue2 = sliderGainControl2.getValue();
+		audioProcessor.getGainControlParameters().gainValue3 = sliderGainControl2.getValue();
 	}
 	audioProcessor.updateGainControl();
 }

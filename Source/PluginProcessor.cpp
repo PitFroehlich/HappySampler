@@ -247,10 +247,7 @@ void HappySamplerAudioProcessor::setExportBuffer(
 void HappySamplerAudioProcessor::loadFile()
 {
 	//removes existing sounds or everything gets messy 
-	for (int sounds = 0; sounds <= synthesiser.getNumSounds(); sounds++)
-	{
-		synthesiser.removeSound(sounds);
-	}
+	synthesiser.clearSounds();
 	
 	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
@@ -319,12 +316,7 @@ void HappySamplerAudioProcessor::reloadFile(
 	std::string fileToOpen, 
 	std::string colourOfSample)
 {
-	
-	//removes existing sound or everything gets messy 
-	if(soundToRemove) 
-	{
 	synthesiser.removeSound(soundToRemove);
-	}
 
 	auto choosenFile = juce::File() = "C:/Users/pitfr/Desktop/" + fileToOpen + ".wav";
 
