@@ -236,8 +236,8 @@ void HappySamplerAudioProcessor::setExportBuffer(
 	originalFileAudioFormatReader->read(
 		&exportbuffer,
 		0,
-		originalFileSampleAmountOfLoadedSample - sampleStart,
-		sampleStart,
+		originalFileSampleAmountOfLoadedSample - sampleStartToUse,
+		sampleStartToUse,
 		true,
 		false
 	);
@@ -331,6 +331,8 @@ void HappySamplerAudioProcessor::reloadFile(
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
+	if (colourOfSample == "green")
+	{
 	HSamplerSound* samplerSound = new HSamplerSound(
 		"Sample" + colourOfSample,
 		*audioFormatReader,
@@ -341,8 +343,38 @@ void HappySamplerAudioProcessor::reloadFile(
 		5.0);
 
 	synthesiser.addSound(samplerSound);
-
 	soundToRemove = synthesiser.getNumSounds() - 1;
+
+	}
+	if (colourOfSample == "red")
+	{ 
+	HSamplerSound2* samplerSound2 = new HSamplerSound2(
+		"Sample" + colourOfSample,
+		*audioFormatReader,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
+
+	synthesiser.addSound(samplerSound2);
+	soundToRemove2 = synthesiser.getNumSounds() - 1;
+	}
+	if (colourOfSample == "blue")
+	{ 
+	HSamplerSound3* samplerSound3 = new HSamplerSound3(
+		"Sample" + colourOfSample,
+		*audioFormatReader,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
+	synthesiser.addSound(samplerSound3);
+	soundToRemove3 = synthesiser.getNumSounds() - 1;
+	}
+
+
 
 	DBG("Tis is the number of sounds at the end of reload");
 	DBG(synthesiser.getNumSounds());

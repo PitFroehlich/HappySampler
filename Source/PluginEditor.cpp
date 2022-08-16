@@ -170,7 +170,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	} 
 	if (slider == &sliderChangeSample1)
 	{
-		audioProcessor.sampleStart1 = sliderChangeSample.getValue()
+		audioProcessor.sampleStart1 = sliderChangeSample1.getValue()
 			* audioProcessor.originalFileSampleAmountOfLoadedSample;
 
 		audioPosition1 = sliderChangeSample1.getValue();
@@ -179,7 +179,7 @@ void HappySamplerAudioProcessorEditor::sliderValueChanged(juce::Slider* slider) 
 	}   
 	if (slider == &sliderChangeSample2)
 	{
-		audioProcessor.sampleStart2 = sliderChangeSample.getValue()
+		audioProcessor.sampleStart2 = sliderChangeSample2.getValue()
 			* audioProcessor.originalFileSampleAmountOfLoadedSample;
 
 		audioPosition2 = sliderChangeSample2.getValue();
