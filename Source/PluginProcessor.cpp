@@ -267,8 +267,6 @@ void HappySamplerAudioProcessor::loadFile()
 	}
 
 	originalFileSampleAmountOfLoadedSample = static_cast<int>(originalFileAudioFormatReader->lengthInSamples);
-	double sampleRateFromSample = static_cast<double>(originalFileAudioFormatReader->sampleRate);
-	int bitsPerSampleFromSample = static_cast<int>(originalFileAudioFormatReader->bitsPerSample);
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
@@ -325,8 +323,6 @@ void HappySamplerAudioProcessor::reloadFile(
 		loadedFile1 = choosenFile;
 
 	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-	double sampleRateFromSample = static_cast<double>(audioFormatReader->sampleRate);
-	int bitsPerSampleFromSample = static_cast<int>(audioFormatReader->bitsPerSample);
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
