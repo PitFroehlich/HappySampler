@@ -35,17 +35,15 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 
 	//This is the constructor ex
 {
-
 	////This makes basic audio formats available
 	audioFormatManager.registerBasicFormats();
 
-
+	//fills max number of voices equally with all three voices
 	for (int i = 0; i < synthesiserVoices / 3; i++)
 	{
 		synthesiser.addVoice(new HSamplerVoice);
 	}
 
-	// Adds SamplerVoices2 to the second half
 	for (int i = synthesiserVoices / 3; i < ((synthesiserVoices / 3) * 2); i++)
 	{
 		synthesiser.addVoice(new HSamplerVoice2);
@@ -130,7 +128,6 @@ void HappySamplerAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need..
 	//gets the sample rate before anything starts
-
 	synthesiser.setCurrentPlaybackSampleRate(sampleRate);
 }
 
@@ -301,6 +298,7 @@ void HappySamplerAudioProcessor::updateGainControl()
 		{
 			voice2->setGainControlParameters(gainControlParams);
 		}
+
 		if (auto voice3 = dynamic_cast<HSamplerVoice3*>(synthesiser.getVoice(i)))
 		{
 			voice3->setGainControlParameters(gainControlParams);
