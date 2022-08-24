@@ -193,30 +193,45 @@ void HappySamplerAudioProcessor::setStateInformation(const void* data, int sizeI
 	// whose contents will have been created by the getStateInformation() call.
 }
 
-void HappySamplerAudioProcessor::exportFile(std::string fileName)
+void HappySamplerAudioProcessor::loadFile()
 {
-	DBG("C:/Users/pitfr/Desktop/" + fileName + ".wav");
+	//removes existing sounds or everything gets messy 
+	synthesiser.clearSounds();
 
-	juce::File file("C:/Users/pitfr/Desktop/" + fileName + ".wav");
-	file.deleteFile();
+	//creates a dialog box to choose a file 
+	juce::FileChooser filechooser{ "Please load a file" };
 
-	
+	if (filechooser.browseForFileToOpen())
+	{
+		auto choosenFile = filechooser.getResult();
+		originalFileAudioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+		loadedFile1 = choosenFile;
+
+		//sets loaded file as source for low resolution thumbnail
+		audioThumbnail.setSource(new juce::FileInputSource(choosenFile));
+	}
+
+	originalFileSampleAmountOfLoadedSample = static_cast<int>(originalFileAudioFormatReader->lengthInSamples);
+
+	juce::BigInteger samplerSoundRange;
+	samplerSoundRange.setRange(0, 128, true);
 
 
-	juce::WavAudioFormat format;
-	std::unique_ptr<juce::AudioFormatWriter> writer;
+	HSamplerSound* samplerSound = new HSamplerSound(
+		"Sample",
+		*originalFileAudioFormatReader,
+		samplerSoundRange,
+		60,
+		0.1,
+		0.1,
+		5.0);
 
-	writer.reset(format.createWriterFor(new juce::FileOutputStream(file),
-		44100,
-		exportbuffer.getNumChannels(),
-		16,
-		{},
-		0));
-
-	if (writer != nullptr)
-		writer->writeFromAudioSampleBuffer(exportbuffer, 0, exportbuffer.getNumSamples());
+	synthesiser.addSound(samplerSound);
+	soundToRemove = synthesiser.getNumSounds() - 1;
 
 }
+
 
 void HappySamplerAudioProcessor::setExportBuffer(
 	int sampleStartToUse) {
@@ -241,37 +256,51 @@ void HappySamplerAudioProcessor::setExportBuffer(
 
 }
 
-void HappySamplerAudioProcessor::loadFile()
+void HappySamplerAudioProcessor::exportFile(std::string fileName)
 {
-	//removes existing sounds or everything gets messy 
-	synthesiser.clearSounds();
-	
-	//creates a dialog box to choose a file 
-	juce::FileChooser filechooser{ "Please load a file" };
+	DBG("C:/Users/pitfr/Desktop/" + fileName + ".wav");
 
-	if (filechooser.browseForFileToOpen())
-	{
-		auto choosenFile = filechooser.getResult();
-		originalFileAudioFormatReader = audioFormatManager.createReaderFor(choosenFile);
-		//audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
-		//audioFormatReader1 = audioFormatManager.createReaderFor(choosenFile);
-		//audioFormatReader2 = audioFormatManager.createReaderFor(choosenFile);
+	juce::File file("C:/Users/pitfr/Desktop/" + fileName + ".wav");
+	file.deleteFile();
 
-		loadedFile1 = choosenFile;
+	juce::WavAudioFormat format;
+	std::unique_ptr<juce::AudioFormatWriter> writer;
 
-		//sets loaded file as source for low resolution thumbnail
-		audioThumbnail.setSource(new juce::FileInputSource(choosenFile));
-	}
+	writer.reset(format.createWriterFor(new juce::FileOutputStream(file),
+		44100,
+		exportbuffer.getNumChannels(),
+		16,
+		{},
+		0));
 
-	originalFileSampleAmountOfLoadedSample = static_cast<int>(originalFileAudioFormatReader->lengthInSamples);
+	if (writer != nullptr)
+		writer->writeFromAudioSampleBuffer(exportbuffer, 0, exportbuffer.getNumSamples());
+
+}
+
+void HappySamplerAudioProcessor::reloadFile(
+	int soundToRemove,
+	std::string fileToOpen,
+	std::string colourOfSample)
+{
+	synthesiser.removeSound(soundToRemove);
+
+	auto choosenFile = juce::File() = "C:/Users/pitfr/Desktop/" + fileToOpen + ".wav";
+
+	audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
+
+	loadedFile1 = choosenFile;
+
+	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
 
 	juce::BigInteger samplerSoundRange;
 	samplerSoundRange.setRange(0, 128, true);
 
-
+	if (colourOfSample == "green")
+	{
 		HSamplerSound* samplerSound = new HSamplerSound(
-			"Sample",
-			*originalFileAudioFormatReader,
+			"Sample" + colourOfSample,
+			*audioFormatReader,
 			samplerSoundRange,
 			60,
 			0.1,
@@ -281,6 +310,34 @@ void HappySamplerAudioProcessor::loadFile()
 		synthesiser.addSound(samplerSound);
 		soundToRemove = synthesiser.getNumSounds() - 1;
 
+	}
+	if (colourOfSample == "red")
+	{
+		HSamplerSound2* samplerSound2 = new HSamplerSound2(
+			"Sample" + colourOfSample,
+			*audioFormatReader,
+			samplerSoundRange,
+			60,
+			0.1,
+			0.1,
+			5.0);
+
+		synthesiser.addSound(samplerSound2);
+		soundToRemove2 = synthesiser.getNumSounds() - 1;
+	}
+	if (colourOfSample == "blue")
+	{
+		HSamplerSound3* samplerSound3 = new HSamplerSound3(
+			"Sample" + colourOfSample,
+			*audioFormatReader,
+			samplerSoundRange,
+			60,
+			0.1,
+			0.1,
+			5.0);
+		synthesiser.addSound(samplerSound3);
+		soundToRemove3 = synthesiser.getNumSounds() - 1;
+	}
 }
 
 void HappySamplerAudioProcessor::updateGainControl()
@@ -307,72 +364,7 @@ void HappySamplerAudioProcessor::updateGainControl()
 
 }
 //==============================================================================
-void HappySamplerAudioProcessor::reloadFile(
-	int soundToRemove, 
-	std::string fileToOpen, 
-	std::string colourOfSample)
-{
-	synthesiser.removeSound(soundToRemove);
 
-	auto choosenFile = juce::File() = "C:/Users/pitfr/Desktop/" + fileToOpen + ".wav";
-
-		audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
-
-		loadedFile1 = choosenFile;
-
-	sampleAmountOfLoadedSample = static_cast<int>(audioFormatReader->lengthInSamples);
-
-	juce::BigInteger samplerSoundRange;
-	samplerSoundRange.setRange(0, 128, true);
-
-	if (colourOfSample == "green")
-	{
-	HSamplerSound* samplerSound = new HSamplerSound(
-		"Sample" + colourOfSample,
-		*audioFormatReader,
-		samplerSoundRange,
-		60,
-		0.1,
-		0.1,
-		5.0);
-
-	synthesiser.addSound(samplerSound);
-	soundToRemove = synthesiser.getNumSounds() - 1;
-
-	}
-	if (colourOfSample == "red")
-	{ 
-	HSamplerSound2* samplerSound2 = new HSamplerSound2(
-		"Sample" + colourOfSample,
-		*audioFormatReader,
-		samplerSoundRange,
-		60,
-		0.1,
-		0.1,
-		5.0);
-
-	synthesiser.addSound(samplerSound2);
-	soundToRemove2 = synthesiser.getNumSounds() - 1;
-	}
-	if (colourOfSample == "blue")
-	{ 
-	HSamplerSound3* samplerSound3 = new HSamplerSound3(
-		"Sample" + colourOfSample,
-		*audioFormatReader,
-		samplerSoundRange,
-		60,
-		0.1,
-		0.1,
-		5.0);
-	synthesiser.addSound(samplerSound3);
-	soundToRemove3 = synthesiser.getNumSounds() - 1;
-	}
-
-
-
-	DBG("Tis is the number of sounds at the end of reload");
-	DBG(synthesiser.getNumSounds());
-}
 
 int HappySamplerAudioProcessor::getCurrentSampleLength() {
 	return sampleAmountOfLoadedSample;
