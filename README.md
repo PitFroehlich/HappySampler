@@ -15,3 +15,4 @@ Buglist:
 * adsr is missing
 * if time is left create a loop function 
 * if time is left create a reverse function
+* Waveform looks too simple for drum loops
