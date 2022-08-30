@@ -25,7 +25,7 @@ private:
     std::unique_ptr<juce::AudioBuffer<float>> data;
     double sourceSampleRate;
     juce::BigInteger midiNotes;
-    int length = 0, midiRootNote = 0;
+    int length{ 0 }, midiRootNote{ 0 };
 
 
     juce::ADSR::Parameters params;

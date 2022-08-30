@@ -31,12 +31,12 @@ public:
 //==============================================================================
 private:
 	//Variables from samplerVoice base class
-	double pitchRatio = 0;
-	double sourceSamplePosition = 0;
-	float lgain = 0, rgain = 0;
+	double pitchRatio{ 0 };
+	double sourceSamplePosition{ 0 };
+	float lgain{ 0 }, rgain{ 0 };
 	double filterCutoff;
 	double levelSlider;
-	int length = 0, midiRootNote = 0;
+	int length{ 0 }, midiRootNote{ 0 };
 
 	juce::ADSR adsr;
 

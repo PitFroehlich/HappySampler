@@ -51,8 +51,8 @@ private:
 
 	//juce::AudioFormatManager audioFormatManager;
 
-	bool waveformIsAvailable = false;
-	bool firstCall = true;
+	bool waveformIsAvailable{ false };
+	bool firstCall{ true };
 
 	juce::TextButton loadButton{ "Load" };
 	juce::TextButton buttonApply{ "Apply" }; //grün
@@ -69,13 +69,13 @@ private:
 
 	std::vector<float> audioPointsFromWaveForm;
 
-	bool paintWaveForm = false;
+	bool paintWaveForm{ false };
 
 	double sliderChangeSampleValue;
 	//==============================================================================
-	double audioPosition = 0;
-	double audioPosition1 = 0;
-	double audioPosition2 = 0;
+	double audioPosition{ 0 };
+	double audioPosition1{ 0 };
+	double audioPosition2{ 0 };
 	//==============================================================================
 
 	GainControl gainControl;
