@@ -19,7 +19,7 @@ public:
 
 	bool canPlaySound(juce::SynthesiserSound*) override;
 
-	void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound*, int pitchWheel) override;
+	void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int pitchWheel) override;
 
 	void stopNote(float velocity, bool allowTailOff) override;
 
@@ -34,6 +34,12 @@ public:
 	
 //==============================================================================
 private:
+	int counter{ 0 };
+	int loopMidiNoteNumber;
+	float loopVelocity;
+	juce::SynthesiserSound* loopS;
+	int loopPitchWheelPosition;
+
 	//Variables from samplerVoice base class
 	double pitchRatio{ 0 };
 	double sourceSamplePosition{ 0 };

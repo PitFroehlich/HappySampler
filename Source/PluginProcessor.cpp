@@ -11,6 +11,7 @@
 #include "PluginEditor.h"
 #include "MultiVoiceSynth.h"
 #include "HSamplerSound.h"
+#include "HSamplerSound.h"
 #include "HSamplerSound2.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
@@ -32,10 +33,8 @@ HappySamplerAudioProcessor::HappySamplerAudioProcessor()
 #endif
 	)
 #endif
-
-	//This is the constructor ex
 {
-	////This makes basic audio formats available
+	//This makes basic audio formats available
 	audioFormatManager.registerBasicFormats();
 
 	//fills max number of voices equally with all three voices
@@ -196,7 +195,7 @@ void HappySamplerAudioProcessor::setStateInformation(const void* data, int sizeI
 void HappySamplerAudioProcessor::loadFile()
 {
 	//removes existing sounds or everything gets messy 
-	synthesiser.clearSounds();
+	synthesiser.clearSounds(); 
 
 	//creates a dialog box to choose a file 
 	juce::FileChooser filechooser{ "Please load a file" };
@@ -258,11 +257,8 @@ void HappySamplerAudioProcessor::setExportBuffer(
 
 void HappySamplerAudioProcessor::exportFile(std::string fileName)
 {
-	DBG("C:/Users/pitfr/Desktop/" + fileName + ".wav");
-
-	juce::File file("C:/Users/pitfr/Desktop/" + fileName + ".wav");
+	juce::File file(placeToStorageFile.getFullPathName() + '\\' + fileName + ".wav");
 	file.deleteFile();
-
 	juce::WavAudioFormat format;
 	std::unique_ptr<juce::AudioFormatWriter> writer;
 
@@ -285,7 +281,7 @@ void HappySamplerAudioProcessor::reloadFile(
 {
 	synthesiser.removeSound(soundToRemove);
 
-	auto choosenFile = juce::File() = "C:/Users/pitfr/Desktop/" + fileToOpen + ".wav";
+	auto choosenFile = juce::File() = placeToStorageFile.getFullPathName() + '\\' + fileToOpen + ".wav";
 
 	audioFormatReader = audioFormatManager.createReaderFor(choosenFile);
 
@@ -344,7 +340,7 @@ void HappySamplerAudioProcessor::updateGainControl()
 {
 	for (int i = 0; i < synthesiser.getNumVoices(); i++)
 	{
-		// gets sounds an makes sure it is a SamplerSound (so setGainControlParameters works)
+		// gets sounds and makes sure it is a SamplerSound (so setGainControlParameters works)
 		// prevents program from crashing in case of exceptions
 		if (auto voice = dynamic_cast<HSamplerVoice*>(synthesiser.getVoice(i)))
 		{

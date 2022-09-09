@@ -55,9 +55,9 @@ private:
 	bool firstCall{ true };
 
 	juce::TextButton loadButton{ "Load" };
-	juce::TextButton buttonApply{ "Apply" }; //grün
-	juce::TextButton buttonApply1{ "Apply" }; //blau 
-	juce::TextButton buttonApply2{ "Apply" }; //rot
+	juce::TextButton buttonApply{ "Apply" }; //green
+	juce::TextButton buttonApply1{ "Apply" }; //blue 
+	juce::TextButton buttonApply2{ "Apply" }; //red
 
 	juce::Slider sliderChangeSample{ "Sample Start" };
 	juce::Slider sliderChangeSample1{ "Sample Start" };

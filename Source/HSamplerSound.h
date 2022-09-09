@@ -27,7 +27,7 @@ private:
     juce::BigInteger midiNotes;
     int length{ 0 }, midiRootNote{ 0 };
 
-
+    
     juce::ADSR::Parameters params;
     GainControl::Parameters gainParams;
 };

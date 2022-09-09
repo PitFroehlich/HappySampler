@@ -120,7 +120,7 @@ public:
 	//==============================================================================
 private: 
 
-	
+	juce::File placeToStorageFile{ juce::File::getSpecialLocation(juce::File::SpecialLocationType::userDesktopDirectory) };
 
 	juce::File loadedFile1;
 

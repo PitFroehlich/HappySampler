@@ -37,6 +37,8 @@
           <FILE id="IKlbzK" name="HSamplerVoice.cpp" compile="1" resource="0"
                 file="Source/HSamplerVoice.cpp"/>
           <FILE id="AeLgrW" name="HSamplerVoice.h" compile="0" resource="0" file="Source/HSamplerVoice.h"/>
+          <FILE id="DAVjsl" name="HSLoopTimer.cpp" compile="1" resource="0" file="Source/HSLoopTimer.cpp"/>
+          <FILE id="oJ5tSn" name="HSLoopTimer.h" compile="0" resource="0" file="Source/HSLoopTimer.h"/>
         </GROUP>
         <FILE id="Nk9sip" name="MultiVoiceSynth.cpp" compile="1" resource="0"
               file="Source/MultiVoiceSynth.cpp"/>

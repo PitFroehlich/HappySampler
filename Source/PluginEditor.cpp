@@ -21,7 +21,7 @@ HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerA
 		setPaintWaveFormToTrue();
 		waveformIsAvailableToTrue();
 		repaint();
-
+		
 	};
 
 	addAndMakeVisible(loadButton);

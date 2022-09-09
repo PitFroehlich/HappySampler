@@ -15,21 +15,16 @@
 #include "PluginProcessor.h"
 #include "GainControl.h"
 
-
-//void HSamplerVoice::setGainControlValue(double gainControlValue) {
-//    gainControl = gainControlValue;
-//}
-
-
 bool HSamplerVoice::canPlaySound(juce::SynthesiserSound* sound)
 {
 	return dynamic_cast<const HSamplerSound*> (sound) != nullptr;
 }
 
-void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int /*currentPitchWheelPosition*/)
+void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* s, int pitchWheelPosition)
 {
 	if (auto* sound = dynamic_cast<const HSamplerSound*> (s))
 	{
+		
 		pitchRatio = std::pow(2.0, (midiNoteNumber - sound->midiRootNote) / 12.0)
 			* sound->sourceSampleRate / getSampleRate();
 
@@ -41,7 +36,6 @@ void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesi
 		adsr.setParameters(sound->params);
 
 		adsr.noteOn();
-
 	}
 	else
 	{
@@ -51,6 +45,7 @@ void HSamplerVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesi
 
 void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
 {
+
 	if (allowTailOff)
 	{
 		adsr.noteOff();
@@ -67,9 +62,10 @@ void HSamplerVoice::stopNote(float /*velocity*/, bool allowTailOff)
 //void HSamplerVoice::controllerMoved(int /*controllerNumber*/, int /*newValue*/) {}
 
 void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
-{
+{   
 	if (auto* playingSound = dynamic_cast<HSamplerSound*> (getCurrentlyPlayingSound().get()))
-	{
+	{	
+		
 		auto& data = *playingSound->getAudioData();
 		const float* const inL = data.getReadPointer(0);
 		const float* const inR = data.getNumChannels() > 1 ? data.getReadPointer(1) : nullptr;
@@ -77,8 +73,13 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 		float* outL = outputBuffer.getWritePointer(0, startSample);
 		float* outR = outputBuffer.getNumChannels() > 1 ? outputBuffer.getWritePointer(1, startSample) : nullptr;
 
+		int initalNumSamples = numSamples;
+
 		while (--numSamples >= 0)
-		{
+		{	
+		
+			
+
 			auto pos = (int)sourceSamplePosition;
 			auto alpha = (float)(sourceSamplePosition - pos);
 			auto invAlpha = 1.0f - alpha;
@@ -114,7 +115,7 @@ void HSamplerVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int 
 				stopNote(0.0f, false);
 				break;
 			}
-		}
+		} 
 	}
 }
 
