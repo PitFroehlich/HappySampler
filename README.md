@@ -1,6 +1,9 @@
 # HappySampler
 Sampler project for bachelor thesis
 
+Ideas for upcoming features:
+* Saving and recalling plugin templates
+
 Buglist: 
 
 * make gain-slider start in the middle 
