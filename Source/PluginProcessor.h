@@ -96,8 +96,8 @@ public:
 	int sampleStart{ 0 };
 	int sampleStart1{ 0 };
 	int sampleStart2{ 0 };
-	int originalFileSampleAmountOfLoadedSample = 1;
-	int sampleAmountOfLoadedSample = 1;
+	int originalFileSampleAmountOfLoadedSample{ 1 };
+	int sampleAmountOfLoadedSample{ 1 };
 
 	int thisIsTheNumberofSample1;
 	int thisIsTheNumberofSample2;
@@ -120,7 +120,7 @@ public:
 	//==============================================================================
 private: 
 
-	
+	juce::File placeToStorageFile{ juce::File::getSpecialLocation(juce::File::SpecialLocationType::userDesktopDirectory) };
 
 	juce::File loadedFile1;
 
@@ -133,15 +133,11 @@ private:
 	MultiVoiceSynth synthesiser;
 	const int synthesiserVoices{ 24 };
 
-	const int numberOfSkippedSamples = 200000;
-
 	GainControl::Parameters gainControlParams;
-
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
-	
 	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
 
 	juce::AudioFormatWriter* audioFormatWriter{ nullptr };

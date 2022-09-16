@@ -11,8 +11,6 @@ void MultiVoiceSynth::noteOn(
     {
         if (sound->appliesToNote(midiNoteNumber) && sound->appliesToChannel(midiChannel))
         {
-            // If hitting a note that's still ringing, stop it first (it could be
-            // still playing because of the sustain or sostenuto pedal).
             for (auto* voice : voices) {
                 if ((voice->getCurrentlyPlayingNote() == midiNoteNumber) &&
                     voice->isPlayingChannel(midiChannel) &&

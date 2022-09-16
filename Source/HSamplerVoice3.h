@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    HSamplerVoice2.h
-    Created: 1 Aug 2022 10:50:05am
+    HSamplerVoice3.h
+    Created: 16 Sep 2022 3:08:04pm
     Author:  pitfr
 
   ==============================================================================
@@ -13,7 +13,7 @@
 #include "GainControl.h"
 
 
-class HSamplerVoice2 : public juce::SamplerVoice {
+class HSamplerVoice3 : public juce::SamplerVoice {
 public:
 	bool canPlaySound(juce::SynthesiserSound*) override;
 
@@ -28,7 +28,7 @@ public:
 
 	void setGainControlParameters(GainControl::Parameters parametersToUse) { gainParams = parametersToUse; }
 
-//==============================================================================
+	//==============================================================================
 private:
 	//Variables from samplerVoice base class
 	double pitchRatio{ 0 };
@@ -44,6 +44,6 @@ private:
 
 	GainControl::Parameters gainParams;
 
-	JUCE_LEAK_DETECTOR(HSamplerVoice2)
+	JUCE_LEAK_DETECTOR(HSamplerVoice3)
 
 };
