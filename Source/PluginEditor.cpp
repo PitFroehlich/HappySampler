@@ -10,7 +10,6 @@
 #include "PluginEditor.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
-#include "WaveForm.h"
 
 //==============================================================================
 HappySamplerAudioProcessorEditor::HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor& p)
