@@ -11,11 +11,10 @@
 #include "PluginEditor.h"
 #include "MultiVoiceSynth.h"
 #include "HSamplerSound.h"
-#include "HSamplerSound.h"
 #include "HSamplerSound2.h"
+#include "HSamplerSound3.h"
 #include "HSamplerVoice.h"
 #include "HSamplerVoice2.h"
-#include "HSamplerSound3.h"
 #include "HSamplerVoice3.h"
 
 
