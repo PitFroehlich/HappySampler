@@ -61,26 +61,69 @@ public:
 	void setStateInformation(const void* data, int sizeInBytes) override;
 	//==============================================================================
 	void loadFile();
-	void loadFile2();
-	void exportFile();
+
+	void reloadFile(
+		int soundToRemove,
+		std::string fileToOpen,
+		std::string colourOfSample);
+
+	void exportFile(std::string fileName);
 	int getCurrentSampleLength();
 	void getSampleStartValue();
-	void exportAndReloadEditedSample();
 
 	void updateGainControl();
+
+	void setExportBuffer(int sampleStartToUse);
+
+	void fillWaveFormBuffer();
+	//==============================================================================
+	juce::AudioThumbnail getAudioThumbnail();
+	//==============================================================================
+
+
+	juce::File getFile();
+
+	juce::AudioFormatManager* getAudioFormatManager();
+
+	juce::AudioBuffer<float>& getWaveFormBuffer() { return waveFormBuffer; }
 
 	//==============================================================================
 	//Dieser Teil hier sollte die geladene Datei wiedergeben
 	juce::AudioBuffer<float>& getLoadedSample(){ return loadedSample; };
 	juce::AudioBuffer<float> exportbuffer;
+	juce::AudioBuffer<float> waveFormBuffer;
 
 	int sampleStart{ 0 };
-	int sampleAmountOfLoadedSample = 1;
+	int sampleStart1{ 0 };
+	int sampleStart2{ 0 };
+	int originalFileSampleAmountOfLoadedSample{ 1 };
+	int sampleAmountOfLoadedSample{ 1 };
+
+	int thisIsTheNumberofSample1;
+	int thisIsTheNumberofSample2;
+
+	int soundToRemove;
+	int soundToRemove2;
+	int soundToRemove3;
 
 	GainControl::Parameters& getGainControlParameters() { return gainControlParams; } 
-	
+
+	//==============================================================================
+	//Waveform Visualization 
+	juce::AudioThumbnailCache audioThumbnailCache;
+	juce::AudioThumbnail audioThumbnail;
+	//==============================================================================
+	juce::AudioFormatReader* originalFileAudioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFormatReader{ nullptr };
+	juce::AudioFormatReader* audioFormatReader1{ nullptr };
+	juce::AudioFormatReader* audioFormatReader2{ nullptr };
 	//==============================================================================
 private: 
+
+	juce::File placeToStorageFile{ juce::File::getSpecialLocation(juce::File::SpecialLocationType::userDesktopDirectory) };
+
+	juce::File loadedFile1;
+
 	juce::WavAudioFormat wavAudioFormat;
 
 	juce::AudioBuffer<float> loadedSample;
@@ -90,16 +133,11 @@ private:
 	MultiVoiceSynth synthesiser;
 	const int synthesiserVoices{ 24 };
 
-	const int numberOfSkippedSamples = 200000;
-
 	GainControl::Parameters gainControlParams;
-
 
 	juce::AudioFormatManager audioFormatManager;
 	//This is a pointer so we do not have to create a new audioFormatReader each time we
 	//change the File
-	juce::AudioFormatReader* audioFormatReader{ nullptr };
-	juce::AudioFormatReader* audioFormatReader2{ nullptr };
 	juce::AudioFormatReader* audioFromatReaderFromReader{ nullptr };
 
 	juce::AudioFormatWriter* audioFormatWriter{ nullptr };

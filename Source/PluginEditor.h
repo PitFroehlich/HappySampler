@@ -18,31 +18,65 @@
 //==============================================================================
 /**
 */
-class HappySamplerAudioProcessorEditor : public juce::AudioProcessorEditor,
-										 public juce::Slider::Listener
+class HappySamplerAudioProcessorEditor : 
+	public juce::AudioProcessorEditor,
+	public juce::Slider::Listener
+
 
 {
 public:
 	HappySamplerAudioProcessorEditor(HappySamplerAudioProcessor&);
 	~HappySamplerAudioProcessorEditor() override;
 
-	//==============================================================================
+
+
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
 	void sliderValueChanged(juce::Slider* slider) override;
 
+	void setPaintWaveFormToTrue();
+
+	void waveformIsAvailableToTrue();
+
+	void HappySamplerAudioProcessorEditor::paintAudioThumbnail(
+		juce::Graphics& g,
+		const juce::Rectangle<int>& audioThumbnailBounds);
+
+	void paintPlayHead(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+	void paintPlayHead1(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+	void paintPlayHead2(juce::Graphics& g, const juce::Rectangle<int>& audioThumbnailBounds);
+
 private:
-	juce::TextButton loadButton{ "Load1" };
-	juce::TextButton loadButton2{ "Load2" };
-	juce::TextButton exportButton{ "Export" };
-	juce::TextButton buttonApply{ "Apply" };
+
+	//juce::AudioFormatManager audioFormatManager;
+
+	bool waveformIsAvailable{ false };
+	bool firstCall{ true };
+
+	juce::TextButton loadButton{ "Load" };
+	juce::TextButton buttonApply{ "Apply" }; //green
+	juce::TextButton buttonApply1{ "Apply" }; //blue 
+	juce::TextButton buttonApply2{ "Apply" }; //red
 
 	juce::Slider sliderChangeSample{ "Sample Start" };
+	juce::Slider sliderChangeSample1{ "Sample Start" };
+	juce::Slider sliderChangeSample2{ "Sample Start" };
+
+	juce::Slider sliderGainControl{ "Gain Control" };
 	juce::Slider sliderGainControl1{ "Gain Control" };
 	juce::Slider sliderGainControl2{ "Gain Control" };
 
+	std::vector<float> audioPointsFromWaveForm;
+
+	bool paintWaveForm{ false };
+
 	double sliderChangeSampleValue;
+	//==============================================================================
+	double audioPosition{ 0 };
+	double audioPosition1{ 0 };
+	double audioPosition2{ 0 };
+	//==============================================================================
 
 	GainControl gainControl;
 
