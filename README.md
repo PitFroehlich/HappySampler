@@ -1,21 +1,6 @@
 # HappySampler
 Sampler project for bachelor thesis
 
-Ideas for upcoming features:
-* Saving and recalling plugin templates
+This project contains a JUCE framework project for an VST3-Instrument that can load MP3s and WAVs.
 
-Buglist: 
 
-* make gain-slider start in the middle 
-* Sound played too long makes the sound crash
-* abort fileload makes program crash
-* do i need edit gaincontrol in SamplerSound AND SamplerVoice???
-* gain sliders need to start in the middle at 1 and need to go to 2 and down to 0 
-* App ist too slow 
-* Thumbnail only reloads when i move frame out of window maybe try to refresh gui 
-* add some kind of data management 
-* Using Apply Button without file lets program crash so only paint them when there is a file loaded
-* adsr is missing
-* if time is left create a loop function 
-* if time is left create a reverse function
-* Waveform looks too simple for drum loops
