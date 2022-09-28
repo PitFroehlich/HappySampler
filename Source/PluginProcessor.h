@@ -69,17 +69,10 @@ public:
 
 	void exportFile(std::string fileName);
 	int getCurrentSampleLength();
-	void getSampleStartValue();
 
 	void updateGainControl();
 
 	void setExportBuffer(int sampleStartToUse);
-
-	void fillWaveFormBuffer();
-	//==============================================================================
-	juce::AudioThumbnail getAudioThumbnail();
-	//==============================================================================
-
 
 	juce::File getFile();
 
